@@ -1,0 +1,29 @@
+name: Normalize academic continuity spacing
+
+on:
+  push:
+    branches:
+      - 'docs/academic-continuity-standard'
+    paths:
+      - '.github/workflows/academic-continuity-spacing.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/academic-continuity-standard
+      - name: Fix Markdown spacing
+        run: |
+          python -c "from pathlib import Path; p=Path('README.md'); s=p.read_text(encoding='utf-8'); s=s.replace('evidencia de materias compartidas en ITLA.\n## 🧩 Dominios','evidencia de materias compartidas en ITLA.\n\n## 🧩 Dominios',1); p.write_text(s,encoding='utf-8')"
+      - name: Commit formatting
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: normalize academic continuity spacing"
+          git push origin HEAD:docs/academic-continuity-standard
