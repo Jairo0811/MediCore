@@ -65,38 +65,86 @@ La identificación de compañeros recurrentes se realiza mediante coincidencia i
 
 ## 🛠️ Stack Tecnológico
 
-### 🔙 Backend
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=cs,dotnet,react,ts,vite,docker,git,github,githubactions" alt="C#, .NET, React, TypeScript, Vite, Docker, Git, GitHub y GitHub Actions" />
+</p>
 
-| Tecnología | Uso en MediCore |
-|---|---|
-| 🟣 **C#** | Lenguaje principal del backend |
-| 💜 **.NET 10** | Plataforma de desarrollo |
-| 🌐 **ASP.NET Core Web API** | API REST desacoplada |
-| 🗃️ **Entity Framework Core** | ORM y acceso a datos |
-| 🛢️ **Microsoft SQL Server** | Base de datos relacional |
-| 📖 **OpenAPI** | Contrato y documentación de la API |
-| ❤️ **ASP.NET Core Health Checks** | Liveness y readiness de servicios |
+<p align="center">
+  <strong>C# · .NET 10 · ASP.NET Core Web API · React 19 · TypeScript · Vite · Entity Framework Core · SQL Server · Docker · xUnit · GitHub Actions</strong>
+</p>
 
-### 🎨 Frontend
+### ⚙️ Backend y API
 
-| Tecnología | Uso en MediCore |
-|---|---|
-| ⚛️ **React 19** | Construcción de la interfaz web |
-| 🔷 **TypeScript** | Tipado estático y mantenibilidad |
-| ⚡ **Vite** | Tooling, desarrollo y build del frontend |
+<p>
+  <img src="https://skillicons.dev/icons?i=cs,dotnet" alt="C# y .NET" />
+  &nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="Swagger / OpenAPI" title="Swagger / OpenAPI" width="48" height="48" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/ASP.NET%20Core-Web%20API-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="ASP.NET Core Web API" />
+  <img src="https://img.shields.io/badge/Entity%20Framework-Core-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="Entity Framework Core" />
+  <img src="https://img.shields.io/badge/OpenAPI-Contrato%20API-85EA2D?style=flat-square&logo=swagger&logoColor=black" alt="OpenAPI" />
+  <img src="https://img.shields.io/badge/Health%20Checks-Liveness%20%26%20Readiness-16A34A?style=flat-square&logo=dotnet&logoColor=white" alt="ASP.NET Core Health Checks" />
+</p>
+
+- **C#:** lenguaje principal para dominio, casos de uso, infraestructura y API.
+- **.NET 10:** plataforma base de la solución.
+- **ASP.NET Core Web API:** backend REST desacoplado del frontend.
+- **Entity Framework Core:** ORM y capa de persistencia.
+- **Swagger / OpenAPI:** contrato, exploración y documentación de endpoints.
+- **ASP.NET Core Health Checks:** endpoints de `liveness` y `readiness` para supervisar servicios.
+
+### 🎨 Frontend y experiencia web
+
+<p>
+  <img src="https://skillicons.dev/icons?i=react,ts,vite,html,css" alt="React, TypeScript, Vite, HTML y CSS" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0B1220" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-Tipado%20estático-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-Build%20Tool-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+</p>
+
+- **React 19:** construcción de la interfaz web por componentes.
+- **TypeScript:** tipado estático y mantenibilidad del cliente.
+- **Vite:** desarrollo local y generación del build de producción.
+- **HTML5 / CSS3:** estructura semántica y presentación de la interfaz.
+
+### 🗄️ Base de datos y persistencia
+
+<p>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="Microsoft SQL Server" title="Microsoft SQL Server" width="52" height="52" />
+  &nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/EF%20Core-Migrations-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt="Entity Framework Core Migrations" />
+</p>
+
+- **Microsoft SQL Server:** motor relacional principal de MediCore.
+- **Entity Framework Core Migrations:** evolución controlada del esquema.
+- **SQL Server en Docker:** entorno reproducible para desarrollo e integración.
 
 ### 🧱 Arquitectura, calidad e infraestructura
 
-| Tecnología / práctica | Uso en MediCore |
-|---|---|
-| 🧱 **Clean Architecture** | Separación de responsabilidades y dependencias |
-| 🧭 **REST API** | Comunicación entre frontend y backend |
-| 🐳 **Docker** | Contenedorización de servicios |
-| 🐳 **Docker Compose** | Orquestación local de Web, API y SQL Server |
-| 🔁 **GitHub Actions** | Integración continua |
-| 🧪 **xUnit** | Pruebas unitarias, integración y arquitectura |
-| 🔒 **Security by Design** | Base para autenticación, autorización y auditoría |
-| 🌿 **Git / GitHub** | Control de versiones y flujo mediante ramas y Pull Requests |
+<p>
+  <img src="https://skillicons.dev/icons?i=docker,git,github,githubactions" alt="Docker, Git, GitHub y GitHub Actions" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/Clean%20Architecture-Arquitectura-0F766E?style=flat-square" alt="Clean Architecture" />
+  <img src="https://img.shields.io/badge/REST-API-2563EB?style=flat-square" alt="REST API" />
+  <img src="https://img.shields.io/badge/xUnit-Tests-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="xUnit" />
+  <img src="https://img.shields.io/badge/Docker%20Compose-Orquestación-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Compose" />
+  <img src="https://img.shields.io/badge/Security%20by%20Design-Seguridad-DC2626?style=flat-square" alt="Security by Design" />
+</p>
+
+- **Clean Architecture:** separación entre `Domain`, `Application`, `Infrastructure` y `Api`.
+- **REST API:** comunicación desacoplada entre React y ASP.NET Core.
+- **Docker / Docker Compose:** contenedorización y orquestación local de Web, API y SQL Server.
+- **xUnit:** pruebas unitarias, de integración y de arquitectura.
+- **GitHub Actions:** integración continua para backend y frontend.
+- **Git / GitHub:** control de versiones mediante ramas, Pull Requests y commits trazables.
+- **Security by Design:** base para autenticación, autorización, protección de datos y auditoría.
 
 ## 🏗️ Arquitectura
 
