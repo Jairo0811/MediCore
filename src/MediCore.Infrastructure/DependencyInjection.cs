@@ -2,9 +2,11 @@ using System.Text;
 using MediCore.Application.Common;
 using MediCore.Application.Identity;
 using MediCore.Application.Patients;
+using MediCore.Application.Staff;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Patients;
 using MediCore.Infrastructure.Persistence;
+using MediCore.Infrastructure.Staff;
 using MediCore.Infrastructure.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -75,6 +77,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICedulaValidator, DominicanCedulaValidator>();
         services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IMedicalStaffService, MedicalStaffService>();
 
         services
             .AddHealthChecks()

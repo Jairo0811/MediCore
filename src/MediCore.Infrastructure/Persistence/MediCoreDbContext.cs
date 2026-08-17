@@ -1,5 +1,6 @@
 using MediCore.Domain.Audit;
 using MediCore.Domain.Patients;
+using MediCore.Domain.Staff;
 using MediCore.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,6 +14,7 @@ public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> option
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<Patient> Patients => Set<Patient>();
+    public DbSet<MedicalStaff> MedicalStaff => Set<MedicalStaff>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
