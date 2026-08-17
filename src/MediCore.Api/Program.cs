@@ -25,11 +25,16 @@ builder.Services.AddCors(options => options.AddPolicy("MediCoreWeb", policy =>
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment()) app.MapOpenApi();
-if (app.Environment.IsProduction() && builder.Configuration.GetValue<bool>("Auth:AllowBootstrapAdmin")) throw new InvalidOperationException("Auth:AllowBootstrapAdmin must be false in Production.");
-if (app.Environment.IsProduction() && builder.Configuration["Jwt:SigningKey"]?.Contains("ChangeThis", StringComparison.OrdinalIgnoreCase) == true) throw new InvalidOperationException("A production-grade JWT signing key is required.");
+if (app.Environment.IsProduction())
+{
+    var signingKey = builder.Configuration["Jwt:SigningKey"];
+    if (builder.Configuration.GetValue<bool>("Auth:AllowBootstrapAdmin")) throw new InvalidOperationException("Auth:AllowBootstrapAdmin must be false in Production.");
+    if (string.IsNullOrWhiteSpace(signingKey) || signingKey.Length < 32 || signingKey.Contains("ChangeThis", StringComparison.OrdinalIgnoreCase) || signingKey.Contains("Development-Key", StringComparison.OrdinalIgnoreCase))
+        throw new InvalidOperationException("A production-grade JWT signing key with at least 32 characters is required.");
+}
 if (builder.Configuration.GetValue<bool>("Database:InitializeOnStartup"))
 {
-    if (app.Environment.IsProduction()) throw new InvalidOperationException("Automatic EnsureCreated initialization is disabled in Production. Provision the schema through the controlled deployment process.");
+    if (app.Environment.IsProduction()) throw new InvalidOperationException("Automatic database migration is disabled in Production. Apply the reviewed migration before starting the application.");
     await app.Services.InitializeMediCoreDatabaseAsync();
 }
 
