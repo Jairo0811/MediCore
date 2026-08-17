@@ -43,19 +43,31 @@ MediCore conserva ese problema de negocio como **antecedente académico y funcio
 | 📅 **Período académico** | Enero - Abril 2026 |
 | 📁 **Tipo de entrega** | Proyecto Final |
 
-## 🔗 Continuidad académica
+## 🧭 Continuidad académica
 
-MediCore forma parte de una trayectoria académica conectada dentro de los proyectos de UNAPEC documentados en este portafolio.
+**MediCore** ocupa un punto central dentro de la continuidad académica documentada en estos proyectos de UNAPEC, porque conecta dos tipos de coincidencia verificable: **profesor recurrente** y **compañera recurrente**. Estas relaciones son **formativas y cronológicas**; no implican dependencias técnicas entre las aplicaciones.
 
-| Tipo de continuidad | Coincidencia | Proyecto relacionado |
-|---|---|---|
-| 👨‍🏫 Profesor recurrente | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** | [CineGest](https://github.com/Jairo0811/CineGest) — Desarrollo de Software con Tecnología Open Source 1 (ISO-610) |
-| 📅 Mismo período académico | **Enero - Abril 2026** | CineGest e ISO-605 fueron cursadas durante el mismo cuatrimestre |
-| 👥 Compañera recurrente | **Emely Marie Castillo Rivera (A00110380)** | [EcoSoft](https://github.com/Jairo0811/Ecosoft) — Proyecto de Software 1 (ISO-705) |
+### 👨‍🏫 Continuidad por profesor
 
-Esto documenta dos tipos de continuidad directa. Durante **Enero - Abril de 2026**, Francis Jairo Matías Rosario desarrolló proyectos finales de **ISO-605** y **ISO-610** con el mismo profesor, abordando tecnología propietaria y tecnología open source. Además, **Emely Marie Castillo Rivera** formó parte del equipo de MediCore en **ISO-605** y volvió a coincidir con Francis Jairo Matías Rosario en el equipo de **EcoSoft (ISO-705)** durante **Mayo - Agosto de 2026**.
+Durante **Enero - Abril de 2026**, el profesor **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** impartió dos asignaturas en las que Francis Jairo Matías Rosario participó en proyectos finales distintos: **Desarrollo de Software con Tecnología Propietaria 1 (ISO-605)** con MediCore y **Desarrollo de Software con Tecnología Open Source 1 (ISO-610)** con [CineGest](https://github.com/Jairo0811/CineGest).
 
-La identificación de compañeros recurrentes se realiza mediante coincidencia inequívoca de **nombre y matrícula**.
+| Orden | Código | Asignatura | Proyecto | Período | Vínculo |
+|---:|---|---|---|---|---|
+| 1 | ISO-605 | Desarrollo de Software con Tecnología Propietaria 1 | **MediCore** | Enero - Abril 2026 | Mismo profesor |
+| 2 | ISO-610 | Desarrollo de Software con Tecnología Open Source 1 | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enero - Abril 2026 | Mismo profesor |
+
+La coincidencia documenta una experiencia paralela con el mismo docente en dos líneas complementarias del plan de estudios: **tecnología propietaria** y **tecnología open source**.
+
+### 👥 Continuidad por compañera
+
+MediCore también inicia una secuencia académica con **Emely Marie Castillo Rivera (A00110380)**. Emely formó parte del equipo de MediCore en **ISO-605** durante **Enero - Abril de 2026** y volvió a coincidir con Francis Jairo Matías Rosario en [**EcoSoft**](https://github.com/Jairo0811/Ecosoft), proyecto de **Proyecto de Software 1 (ISO-705)** desarrollado en **Mayo - Agosto de 2026**.
+
+| Orden | Código | Asignatura | Proyecto | Período | Compañera recurrente |
+|---:|---|---|---|---|---|
+| 1 | ISO-605 | Desarrollo de Software con Tecnología Propietaria 1 | **MediCore** | Enero - Abril 2026 | **Emely Marie Castillo Rivera — A00110380** |
+| 2 | ISO-705 | Proyecto de Software 1 | [**EcoSoft**](https://github.com/Jairo0811/Ecosoft) | Mayo - Agosto 2026 | **Emely Marie Castillo Rivera — A00110380** |
+
+Vistos en conjunto, estos proyectos muestran continuidad tanto en la relación docente como en la colaboración entre compañeros. La identidad de la compañera recurrente se considera verificada por coincidencia de **nombre completo y matrícula A00110380**.
 
 ## 🧩 Dominios
 
