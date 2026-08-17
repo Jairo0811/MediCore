@@ -1,11 +1,14 @@
 using System.Text.Json;
+using MediCore.Api.Endpoints;
 using MediCore.Infrastructure;
+using MediCore.Infrastructure.Identity;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddCors(options =>
@@ -32,14 +35,24 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+if (builder.Configuration.GetValue<bool>("Database:InitializeOnStartup"))
+{
+    await app.Services.InitializeMediCoreDatabaseAsync();
+}
+
+app.UseExceptionHandler();
 app.UseCors("MediCoreWeb");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapGet("/api", () => Results.Ok(new
 {
     name = "MediCore.Api",
     slogan = "La gestión médica en un solo lugar.",
-    version = "0.1.0-phase0"
+    version = "0.6.0-phases1-5"
 }));
+
+app.MapAuthEndpoints();
 
 app.MapHealthChecks("/api/health/live", new HealthCheckOptions
 {
