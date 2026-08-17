@@ -9,19 +9,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddOpenApi();
-builder.Services.AddProblemDetails();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddRateLimiter(options => options.AddFixedWindowLimiter("auth", limiter =>
-{
-    limiter.PermitLimit = 10; limiter.Window = TimeSpan.FromMinutes(1); limiter.QueueLimit = 0; limiter.AutoReplenishment = true;
-}));
-builder.Services.AddCors(options => options.AddPolicy("MediCoreWeb", policy =>
-{
-    var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
-    if (allowedOrigins.Length > 0) policy.WithOrigins(allowedOrigins);
-    policy.AllowAnyHeader().AllowAnyMethod();
-}));
+builder.Services.AddOpenApi(); builder.Services.AddProblemDetails(); builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddRateLimiter(options => options.AddFixedWindowLimiter("auth", limiter => { limiter.PermitLimit = 10; limiter.Window = TimeSpan.FromMinutes(1); limiter.QueueLimit = 0; limiter.AutoReplenishment = true; }));
+builder.Services.AddCors(options => options.AddPolicy("MediCoreWeb", policy => { var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? []; if (allowedOrigins.Length > 0) policy.WithOrigins(allowedOrigins); policy.AllowAnyHeader().AllowAnyMethod(); }));
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment()) app.MapOpenApi();
@@ -29,18 +19,13 @@ if (app.Environment.IsProduction())
 {
     var signingKey = builder.Configuration["Jwt:SigningKey"];
     if (builder.Configuration.GetValue<bool>("Auth:AllowBootstrapAdmin")) throw new InvalidOperationException("Auth:AllowBootstrapAdmin must be false in Production.");
-    if (string.IsNullOrWhiteSpace(signingKey) || signingKey.Length < 32 || signingKey.Contains("ChangeThis", StringComparison.OrdinalIgnoreCase) || signingKey.Contains("Development-Key", StringComparison.OrdinalIgnoreCase))
-        throw new InvalidOperationException("A production-grade JWT signing key with at least 32 characters is required.");
+    if (string.IsNullOrWhiteSpace(signingKey) || signingKey.Length < 32 || signingKey.Contains("ChangeThis", StringComparison.OrdinalIgnoreCase) || signingKey.Contains("Development-Key", StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("A production-grade JWT signing key with at least 32 characters is required.");
 }
-if (builder.Configuration.GetValue<bool>("Database:InitializeOnStartup"))
-{
-    if (app.Environment.IsProduction()) throw new InvalidOperationException("Automatic database migration is disabled in Production. Apply the reviewed migration before starting the application.");
-    await app.Services.InitializeMediCoreDatabaseAsync();
-}
+if (builder.Configuration.GetValue<bool>("Database:InitializeOnStartup")) { if (app.Environment.IsProduction()) throw new InvalidOperationException("Automatic database migration is disabled in Production. Apply the reviewed migration before starting the application."); await app.Services.InitializeMediCoreDatabaseAsync(); }
 
-app.UseExceptionHandler(); app.UseMiddleware<RequestObservabilityMiddleware>(); app.UseCors("MediCoreWeb"); app.UseRateLimiter(); app.UseAuthentication(); app.UseAuthorization();
+app.UseExceptionHandler(); app.UseMiddleware<RequestObservabilityMiddleware>(); app.UseCors("MediCoreWeb"); app.UseRateLimiter(); app.UseAuthentication(); app.UseMiddleware<AuditTrailMiddleware>(); app.UseAuthorization();
 app.MapGet("/api", () => Results.Ok(new { name = "MediCore.Api", slogan = "La gestión médica en un solo lugar.", version = "1.0.0" }));
-app.MapAuthEndpoints(); app.MapPatientEndpoints(); app.MapMedicalStaffEndpoints(); app.MapAppointmentEndpoints(); app.MapConsultationEndpoints(); app.MapPharmacyEndpoints(); app.MapInventoryEndpoints(); app.MapLaboratoryEndpoints(); app.MapAnalyticsEndpoints();
+app.MapAuthEndpoints(); app.MapPatientEndpoints(); app.MapMedicalStaffEndpoints(); app.MapAppointmentEndpoints(); app.MapConsultationEndpoints(); app.MapPharmacyEndpoints(); app.MapInventoryEndpoints(); app.MapLaboratoryEndpoints(); app.MapAnalyticsEndpoints(); app.MapAuditEndpoints();
 app.MapHealthChecks("/api/health/live", new HealthCheckOptions { Predicate = _ => false, ResponseWriter = WriteHealthResponse });
 app.MapHealthChecks("/api/health/ready", new HealthCheckOptions { Predicate = registration => registration.Tags.Contains("ready"), ResponseWriter = WriteHealthResponse });
 app.MapHealthChecks("/api/health", new HealthCheckOptions { ResponseWriter = WriteHealthResponse });

@@ -1,6 +1,7 @@
 using System.Text;
 using MediCore.Application.Analytics;
 using MediCore.Application.Appointments;
+using MediCore.Application.Audit;
 using MediCore.Application.Common;
 using MediCore.Application.Consultations;
 using MediCore.Application.Identity;
@@ -11,6 +12,7 @@ using MediCore.Application.Pharmacy;
 using MediCore.Application.Staff;
 using MediCore.Infrastructure.Analytics;
 using MediCore.Infrastructure.Appointments;
+using MediCore.Infrastructure.Audit;
 using MediCore.Infrastructure.Consultations;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Inventory;
@@ -52,7 +54,7 @@ public static class DependencyInjection
         services.AddAuthorization();
         services.AddScoped<IAuthService, AuthService>(); services.AddScoped<ICedulaValidator, DominicanCedulaValidator>(); services.AddScoped<IPatientService, PatientService>(); services.AddScoped<IMedicalStaffService, MedicalStaffService>();
         services.AddScoped<IAppointmentService, AppointmentService>(); services.AddScoped<IConsultationService, ConsultationService>(); services.AddScoped<IPharmacyService, PharmacyService>();
-        services.AddScoped<IInventoryService, InventoryService>(); services.AddScoped<ILaboratoryService, LaboratoryService>(); services.AddScoped<IAnalyticsService, AnalyticsService>();
+        services.AddScoped<IInventoryService, InventoryService>(); services.AddScoped<ILaboratoryService, LaboratoryService>(); services.AddScoped<IAnalyticsService, AnalyticsService>(); services.AddScoped<IAuditService, AuditService>();
         services.AddHealthChecks().AddDbContextCheck<MediCoreDbContext>(name: "database", tags: ["ready"]);
         return services;
     }

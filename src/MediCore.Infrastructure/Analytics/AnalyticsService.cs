@@ -33,4 +33,17 @@ public sealed class AnalyticsService(MediCoreDbContext dbContext) : IAnalyticsSe
                           select new { lot, med }).ToArrayAsync(cancellationToken);
         return rows.Select(x => new InventoryAlertResponse(x.lot.Id, x.med.Code, x.med.Name, x.lot.LotNumber, x.lot.QuantityOnHand, x.lot.ReorderPoint, x.lot.ExpirationDate, x.lot.QuantityOnHand <= x.lot.ReorderPoint ? "LOW_STOCK" : "EXPIRING")).ToArray();
     }
+
+    public async Task<OperationalReportResponse> GetOperationalReportAsync(DateOnly from, DateOnly to, CancellationToken cancellationToken)
+    {
+        var start = from.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+        var endExclusive = to.AddDays(1).ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+        var appointments = await dbContext.Appointments.CountAsync(x => x.ScheduledStartUtc >= start && x.ScheduledStartUtc < endExclusive, cancellationToken);
+        var consultations = await dbContext.Consultations.CountAsync(x => x.ConsultationDateUtc >= start && x.ConsultationDateUtc < endExclusive, cancellationToken);
+        var completedConsultations = await dbContext.Consultations.CountAsync(x => x.ConsultationDateUtc >= start && x.ConsultationDateUtc < endExclusive && (int)x.Status == 2, cancellationToken);
+        var labOrders = await dbContext.LabOrders.CountAsync(x => x.OrderedAtUtc >= start && x.OrderedAtUtc < endExclusive, cancellationToken);
+        var completedLabOrders = await dbContext.LabOrders.CountAsync(x => x.OrderedAtUtc >= start && x.OrderedAtUtc < endExclusive && x.Status == LabOrderStatus.Completed, cancellationToken);
+        var movements = await dbContext.InventoryMovements.AsNoTracking().Where(x => x.OccurredAtUtc >= start && x.OccurredAtUtc < endExclusive).Select(x => x.QuantityDelta).ToArrayAsync(cancellationToken);
+        return new(from, to, appointments, consultations, completedConsultations, labOrders, completedLabOrders, movements.Length, movements.Sum(x => Math.Abs(x)));
+    }
 }
