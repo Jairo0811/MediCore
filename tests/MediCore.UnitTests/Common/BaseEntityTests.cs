@@ -1,4 +1,5 @@
 using MediCore.Domain.Common;
+using Xunit;
 
 namespace MediCore.UnitTests.Common;
 
