@@ -53,6 +53,7 @@ app.MapGet("/api", () => Results.Ok(new
 }));
 
 app.MapAuthEndpoints();
+app.MapPatientEndpoints();
 
 app.MapHealthChecks("/api/health/live", new HealthCheckOptions
 {
