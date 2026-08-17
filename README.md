@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="branding/cover.webp" alt="MediCore — La gestión médica en un solo lugar" width="100%" />
+  <img src="branding/cover.png" alt="MediCore — La gestión médica en un solo lugar" width="100%" />
 </p>
 
 # 🏥 MediCore
