@@ -26,10 +26,10 @@ MediCore conserva ese problema de negocio como **antecedente académico y funcio
 
 | 👤 Integrante | 🆔 Matrícula |
 |---|---|
-| 👩🏻‍💻 Zodelys Luciano Francisco | A00114484 |
 | 👨🏻‍💻 José Samuel Peña Acevedo | A00107391 |
-| 👨🏻‍💻 Francis Jairo Matías Rosario | A00115261 |
 | 👩🏻‍💻 Emely Marie Castillo Rivera | A00110380 |
+| 👩🏻‍💻 Zodelys Luciano Francisco | A00114484 |
+| 👨🏻‍💻 Francis Jairo Matías Rosario | A00115261 |
 | 👨🏻‍💻 Jeuel Ortiz Medrano | A00115584 |
 
 > El equipo anterior corresponde al proyecto académico original **DispensarioMedicoUnapec**. **MediCore** es una reconstrucción y evolución independiente desarrollada por Francis Jairo Matías Rosario.
