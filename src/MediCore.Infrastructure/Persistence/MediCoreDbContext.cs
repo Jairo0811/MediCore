@@ -1,3 +1,4 @@
+using MediCore.Domain.Appointments;
 using MediCore.Domain.Audit;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Staff;
@@ -15,6 +16,7 @@ public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> option
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<Patient> Patients => Set<Patient>();
     public DbSet<MedicalStaff> MedicalStaff => Set<MedicalStaff>();
+    public DbSet<Appointment> Appointments => Set<Appointment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

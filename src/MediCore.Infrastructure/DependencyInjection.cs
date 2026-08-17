@@ -1,8 +1,10 @@
 using System.Text;
+using MediCore.Application.Appointments;
 using MediCore.Application.Common;
 using MediCore.Application.Identity;
 using MediCore.Application.Patients;
 using MediCore.Application.Staff;
+using MediCore.Infrastructure.Appointments;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Patients;
 using MediCore.Infrastructure.Persistence;
@@ -78,6 +80,7 @@ public static class DependencyInjection
         services.AddScoped<ICedulaValidator, DominicanCedulaValidator>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IMedicalStaffService, MedicalStaffService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
 
         services
             .AddHealthChecks()
