@@ -15,5 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/MediCore.Domain/MediCore.Domain.csproj" />
+    <ProjectReference Include="../../src/MediCore.Infrastructure/MediCore.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

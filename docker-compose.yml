@@ -45,6 +45,11 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=MediCore;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;Encrypt=False;"
+      Database__InitializeOnStartup: "true"
+      Auth__AllowBootstrapAdmin: "true"
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:?Set JWT_SIGNING_KEY in .env}
+      Jwt__Issuer: MediCore
+      Jwt__Audience: MediCore.Web
       Cors__AllowedOrigins__0: http://localhost:5173
     ports:
       - "8080:8080"
