@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/UNAPEC-ISO--605-003B70?style=for-the-badge" alt="UNAPEC ISO-605">
-  <img src="https://img.shields.io/badge/Estado-Fases%200--5%20implementadas-16A34A?style=for-the-badge" alt="Fases 0 a 5 implementadas">
+  <img src="https://img.shields.io/badge/Estado-Fases%200--6%20implementadas-16A34A?style=for-the-badge" alt="Fases 0 a 6 implementadas">
   <img src="https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1220" alt="React 19">
 </p>
@@ -15,7 +15,7 @@
 
 > **La gestión médica en un solo lugar.**
 
-**MediCore** es una plataforma moderna de gestión médica orientada a consultorios, dispensarios y centros de salud. Centraliza identidad y acceso, pacientes, personal médico, agenda, consultas e historia clínica sobre una arquitectura desacoplada y preparada para crecer hacia farmacia, inventario, laboratorio, analítica y administración.
+**MediCore** es una plataforma moderna de gestión médica orientada a consultorios, dispensarios y centros de salud. Centraliza identidad y acceso, pacientes, personal médico, agenda, consultas, historia clínica y catálogo farmacéutico sobre una arquitectura desacoplada y preparada para crecer hacia inventario, laboratorio, analítica y administración.
 
 ---
 
@@ -23,7 +23,7 @@
 
 MediCore toma como **referencia funcional y académica** el proyecto grupal [DispensarioMedicoUnapec](https://github.com/JosesamuelPA/DispensarioMedicoUnapec), desarrollado como proyecto final para el dispensario médico de la Universidad APEC (UNAPEC).
 
-Este repositorio **no es un fork ni una copia**. MediCore representa una evolución individual de aquella experiencia académica: la solución se reconstruye desde cero con identidad visual, experiencia de usuario, arquitectura y decisiones tecnológicas propias.
+Este repositorio **no es un fork ni una copia**. MediCore representa una reconstrucción y evolución individual de aquella experiencia académica, desarrollada desde cero con identidad visual, experiencia de usuario, arquitectura y decisiones tecnológicas propias.
 
 ### 📜 Antecedente del enunciado académico
 
@@ -110,7 +110,7 @@ No se infiere que ambos hayan cursado una misma asignatura en ITLA; la coinciden
 
 ## ✅ Estado actual
 
-Las **Fases 0 a 5** conforman actualmente el núcleo funcional de MediCore:
+Las **Fases 0 a 6** conforman actualmente el núcleo funcional de MediCore:
 
 | Área | Estado | Alcance implementado |
 |---|:---:|---|
@@ -121,8 +121,9 @@ Las **Fases 0 a 5** conforman actualmente el núcleo funcional de MediCore:
 | Agenda y citas | ✅ | Programación, estados y prevención de solapamientos |
 | Consultas | ✅ | Síntomas, diagnóstico, recomendaciones y signos vitales |
 | Historia clínica | ✅ | Línea clínica por paciente basada en consultas completadas |
-| Frontend operativo | ✅ | Login, pacientes, personal, agenda y consultas |
-| Farmacia e inventario | ⏳ | Fases 6 y 7 |
+| Farmacia | ✅ | Tipos de fármacos, marcas, ubicaciones y catálogo de medicamentos |
+| Frontend operativo | ✅ | Login, pacientes, personal, agenda, consultas y farmacia |
+| Inventario | ⏳ | Lotes, existencias, kardex y vencimientos — Fase 7 |
 | Laboratorio | ⏳ | Fase 8 |
 | Analítica y reportes | ⏳ | Fase 9 |
 
@@ -131,9 +132,37 @@ Las **Fases 0 a 5** conforman actualmente el núcleo funcional de MediCore:
 | Área | Alcance |
 |---|---|
 | 🩺 **Consultorios** | Pacientes, médicos, citas, consultas e historia clínica |
-| 💊 **Farmacia** | Medicamentos, tipos de fármacos, marcas, lotes, ubicaciones, inventario, kardex y vencimientos |
+| 💊 **Farmacia** | Tipos de fármacos, marcas, medicamentos y ubicaciones; inventario transaccional en Fase 7 |
 | 🧪 **Laboratorio** | Órdenes, estudios y resultados clínicos |
 | ⚙️ **Administración** | Usuarios, roles, permisos, configuración, auditoría, dashboard y reportes |
+
+---
+
+## 💊 Fase 6 — Farmacia y medicamentos
+
+La Fase 6 recupera uno de los dominios principales del enunciado original del Dispensario Médico y lo moderniza como un **catálogo farmacéutico desacoplado del inventario físico**.
+
+Incluye:
+
+- tipos de fármacos;
+- marcas y laboratorios farmacéuticos;
+- ubicaciones de almacenamiento;
+- código único de medicamento;
+- nombre comercial y genérico;
+- principio activo;
+- concentración;
+- forma farmacéutica;
+- unidad de medida;
+- indicador de receta requerida;
+- indicador de sustancia controlada;
+- búsqueda y filtrado;
+- baja lógica;
+- integridad referencial entre catálogos y medicamentos;
+- RBAC con escritura restringida a `Administrator` y `Pharmacist`.
+
+> **Fase 6 define qué medicamento existe y cómo se clasifica.** Cantidades, lotes, costos, vencimientos, movimientos y kardex pertenecen a la **Fase 7**.
+
+Consulta [`docs/development/PHASE_6.md`](docs/development/PHASE_6.md).
 
 ---
 
@@ -187,6 +216,7 @@ Consulta [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATIO
 - **Vite**
 - **HTML5 / CSS3**
 - Cliente HTTP con renovación automática de sesión mediante refresh token
+- UI modular para pacientes, personal, agenda, consultas y farmacia
 - Diseño responsive para operación clínica
 
 ### 🗄️ Datos y persistencia
@@ -198,8 +228,8 @@ Consulta [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATIO
 - **Microsoft SQL Server 2022**
 - **Entity Framework Core**
 - SQL Server en Docker para desarrollo local
-- Índices únicos para cédula, expediente, códigos internos y refresh tokens
-- Relaciones restrictivas para preservar integridad clínica
+- Índices únicos para cédula, expediente, códigos internos, medicamentos y catálogos
+- Relaciones restrictivas para preservar integridad clínica y farmacéutica
 
 ### 🧱 Arquitectura, calidad e infraestructura
 
@@ -233,11 +263,15 @@ MediCore/
 │   │   ├── Staff/
 │   │   ├── Appointments/
 │   │   ├── Consultations/
+│   │   ├── Pharmacy/
 │   │   └── Audit/
 │   ├── MediCore.Application/
 │   ├── MediCore.Infrastructure/
 │   ├── MediCore.Api/
 │   └── MediCore.Web/
+│       ├── pages/
+│       ├── components/
+│       └── utils/
 ├── tests/
 │   ├── MediCore.UnitTests/
 │   ├── MediCore.IntegrationTests/
@@ -261,23 +295,23 @@ React Web -------------------------------> Api
 
 ## 🔐 Identidad y roles
 
-Roles iniciales:
-
 | Rol | Alcance esperado |
 |---|---|
-| `Administrator` | Administración global y altas de usuarios/personal |
-| `Doctor` | Atención clínica, agenda e historia clínica |
+| `Administrator` | Administración global y mantenimiento de catálogos |
+| `Doctor` | Atención clínica, agenda, historia clínica y consulta de farmacia |
 | `Nurse` | Consulta operativa y apoyo clínico |
 | `Receptionist` | Pacientes y agenda |
-| `Pharmacist` | Farmacia e inventario en fases posteriores |
-| `Laboratory` | Laboratorio clínico en fase posterior |
-| `Auditor` | Auditoría y trazabilidad en fase posterior |
+| `Pharmacist` | Mantenimiento de farmacia e inventario |
+| `Laboratory` | Laboratorio clínico en Fase 8 |
+| `Auditor` | Consulta y trazabilidad |
 
 Los access tokens son de corta duración y los refresh tokens se almacenan como **hash SHA-256**, con rotación y revocación.
 
 ---
 
-## 🌐 API — núcleo clínico
+## 🌐 API
+
+### Núcleo clínico
 
 ```text
 /api/auth/*
@@ -288,7 +322,17 @@ Los access tokens son de corta duración y los refresh tokens se almacenan como 
 /api/patients/{id}/clinical-history
 ```
 
-Endpoints de plataforma:
+### Farmacia
+
+```text
+/api/pharmacy/drug-types
+/api/pharmacy/brands
+/api/pharmacy/locations
+/api/pharmacy/medications
+/api/pharmacy/medications/{id}
+```
+
+### Plataforma
 
 ```text
 GET /api
@@ -322,7 +366,18 @@ MSSQL_SA_PASSWORD
 JWT_SIGNING_KEY
 ```
 
-### 2. Levantar MediCore
+### 2. Si vienes de una versión anterior a la Fase 6
+
+El entorno de desarrollo todavía inicializa el esquema mediante `EnsureCreated`. Si ya existe un volumen SQL Server anterior a la Fase 6, recréalo para que aparezcan las nuevas tablas:
+
+```powershell
+docker compose down -v
+docker compose up --build
+```
+
+> Esta operación elimina los datos del volumen local de desarrollo. Antes de producción se sustituirá `EnsureCreated` por migraciones versionadas y un proceso controlado de despliegue de base de datos.
+
+### 3. Levantar MediCore
 
 ```bash
 docker compose up --build
@@ -371,7 +426,7 @@ npm run dev
 | **3** | Médicos y personal | ✅ Implementada |
 | **4** | Agenda y citas | ✅ Implementada |
 | **5** | Consultas e historia clínica | ✅ Implementada |
-| **6** | Farmacia y medicamentos | ⏳ Pendiente |
+| **6** | Farmacia y medicamentos | ✅ Implementada |
 | **7** | Inventario, lotes, kardex y vencimientos | ⏳ Pendiente |
 | **8** | Laboratorio | ⏳ Pendiente |
 | **9** | Dashboard, analítica y reportes | ⏳ Pendiente |
@@ -399,6 +454,7 @@ npm run dev
 - [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md) — decisiones de arquitectura.
 - [`docs/development/PHASE_0.md`](docs/development/PHASE_0.md) — fundación técnica.
 - [`docs/development/PHASES_1_5.md`](docs/development/PHASES_1_5.md) — núcleo clínico y endpoints de las fases 1–5.
+- [`docs/development/PHASE_6.md`](docs/development/PHASE_6.md) — farmacia, medicamentos y frontera con inventario.
 - [`docs/reference/DISPENSARIO_UNAPEC.md`](docs/reference/DISPENSARIO_UNAPEC.md) — procedencia académica y relación con el proyecto original.
 - [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATION.md) — diseño del validador dominicano.
 - [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) — atribuciones y licencias de terceros.
