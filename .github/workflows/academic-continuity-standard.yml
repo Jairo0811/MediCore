@@ -1,0 +1,28 @@
+name: Apply academic continuity standard
+
+on:
+  push:
+    branches:
+      - 'docs/academic-continuity-standard'
+    paths:
+      - '.github/workflows/academic-continuity-standard.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/academic-continuity-standard
+      - name: Patch README
+        run: python .github/scripts/patch-academic-continuity.py
+      - name: Commit README
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: standardize academic continuity by student and professor"
+          git push origin HEAD:docs/academic-continuity-standard
