@@ -63,7 +63,7 @@ MediCore documenta continuidad académica verificable por **compañeros**, **pro
 
 **Emely Marie Castillo Rivera (A00110380)** coincidió con Francis Jairo Matías Rosario primero en **MediCore (ISO-605)** durante **Enero - Abril de 2026** y posteriormente en [**EcoSoft**](https://github.com/Jairo0811/Ecosoft), correspondiente a **Proyecto de Software 1 (ISO-705)** durante **Mayo - Agosto de 2026**.
 
-| Orden | Asignatura | Proyecto | Período | Estudiante recurrente |
+| Orden | Asignatura | Proyecto | Período | Estudiante |
 |---:|---|---|---|---|
 | 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 | **Emely Marie Castillo Rivera — A00110380** |
 | 2 | Proyecto de Software 1 (ISO-705) | [**EcoSoft**](https://github.com/Jairo0811/Ecosoft) | Mayo - Agosto 2026 | **Emely Marie Castillo Rivera — A00110380** |
@@ -74,7 +74,7 @@ La coincidencia se considera verificada por **nombre completo y matrícula**.
 
 El profesor **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** impartió durante **Enero - Abril de 2026** dos asignaturas en las que se desarrollaron proyectos finales distintos: **ISO-605**, origen directo de MediCore, e **ISO-610**, origen de [**CineGest**](https://github.com/Jairo0811/CineGest).
 
-| Orden | Asignatura | Proyecto | Período | Profesor recurrente |
+| Orden | Asignatura | Proyecto | Período | Profesor |
 |---:|---|---|---|---|
 | 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** |
 | 2 | Desarrollo de Software con Tecnología Open Source 1 (ISO-610) | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enero - Abril 2026 | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** |
