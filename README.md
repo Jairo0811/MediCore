@@ -25,7 +25,7 @@ MediCore conserva ese problema de negocio como **antecedente académico y funcio
 | 👩🏻‍💻 Zodelys Luciano Francisco | A00114484 |
 | 👨🏻‍💻 José Samuel Peña Acevedo | A00107391 |
 | 👨🏻‍💻 Francis Jairo Matías Rosario | A00115261 |
-| 👩🏻‍💻 Emely Castillo Rivera | A00116415 |
+| 👩🏻‍💻 Emely Marie Castillo Rivera | A00110380 |
 | 👨🏻‍💻 Jeuel Ortiz Medrano | A00115584 |
 
 > El equipo anterior corresponde al proyecto académico original **DispensarioMedicoUnapec**. **MediCore** es una reconstrucción y evolución independiente desarrollada por Francis Jairo Matías Rosario.
@@ -48,10 +48,11 @@ MediCore forma parte de una trayectoria académica conectada dentro de los proye
 |---|---|---|
 | 👨‍🏫 Profesor recurrente | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** | [CineGest](https://github.com/Jairo0811/CineGest) — Desarrollo de Software con Tecnología Open Source 1 (ISO-610) |
 | 📅 Mismo período académico | **Enero - Abril 2026** | CineGest e ISO-605 fueron cursadas durante el mismo cuatrimestre |
+| 👥 Compañera recurrente | **Emely Marie Castillo Rivera (A00110380)** | [EcoSoft](https://github.com/Jairo0811/Ecosoft) — Proyecto de Software 1 (ISO-705) |
 
-Esto documenta una continuidad docente directa: durante **Enero - Abril de 2026**, Francis Jairo Matías Rosario desarrolló proyectos finales de **ISO-605** y **ISO-610** con el mismo profesor, abordando dos líneas tecnológicas distintas: tecnología propietaria y tecnología open source.
+Esto documenta dos tipos de continuidad directa. Durante **Enero - Abril de 2026**, Francis Jairo Matías Rosario desarrolló proyectos finales de **ISO-605** y **ISO-610** con el mismo profesor, abordando tecnología propietaria y tecnología open source. Además, **Emely Marie Castillo Rivera** formó parte del equipo de MediCore en **ISO-605** y volvió a coincidir con Francis Jairo Matías Rosario en el equipo de **EcoSoft (ISO-705)** durante **Mayo - Agosto de 2026**.
 
-> Para identificar continuidad entre compañeros se exige coincidencia inequívoca de **nombre y matrícula**. No se infieren relaciones únicamente por similitud de nombres o por una matrícula aislada.
+La identificación de compañeros recurrentes se realiza mediante coincidencia inequívoca de **nombre y matrícula**.
 
 ## 🧩 Dominios
 
