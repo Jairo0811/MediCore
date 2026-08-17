@@ -3,7 +3,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/UNAPEC-ISO--605-003B70?style=for-the-badge" alt="UNAPEC ISO-605">
+   <img src="https://img.shields.io/badge/UNAPEC-ISO--605-003B70?style=for-the-badge" alt="UNAPEC ISO-605">
+</p>
+
+
+<p align="center">
+
   <img src="https://img.shields.io/badge/Estado-v1.0.0%20%C2%B7%20Fases%200--10-16A34A?style=for-the-badge" alt="MediCore v1.0.0 · Fases 0 a 10">
   <img src="https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1220" alt="React 19">
