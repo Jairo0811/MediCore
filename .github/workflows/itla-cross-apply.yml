@@ -1,0 +1,28 @@
+name: Apply ITLA UNAPEC cross-reference
+
+on:
+  push:
+    branches:
+      - 'docs/itla-unapec-cross'
+    paths:
+      - '.github/workflows/itla-cross-apply.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs/itla-unapec-cross
+      - name: Patch README
+        run: python .github/scripts/patch-itla-cross.py
+      - name: Commit README
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: document ITLA to UNAPEC academic cross-reference"
+          git push origin HEAD:docs/itla-unapec-cross
