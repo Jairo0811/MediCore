@@ -2,7 +2,6 @@
   <img src="branding/cover.png" alt="MediCore — La gestión médica en un solo lugar" width="100%" />
 </p>
 
-# 🏥 MediCore
 
 > **La gestión médica en un solo lugar.**
 
