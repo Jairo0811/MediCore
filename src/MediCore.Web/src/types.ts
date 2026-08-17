@@ -1,132 +1,17 @@
-export type SessionUser = {
-  id: string;
-  email: string;
-  fullName: string;
-  roles: string[];
-};
-
-export type AuthResponse = {
-  accessToken: string;
-  refreshToken: string;
-  expiresAtUtc: string;
-  user: SessionUser;
-};
-
-export type Patient = {
-  id: string;
-  medicalRecordNumber: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  cedula: string;
-  patientType: number;
-  sex: number;
-  dateOfBirth?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  address?: string | null;
-  emergencyContactName?: string | null;
-  emergencyContactPhone?: string | null;
-  isActive: boolean;
-};
-
-export type MedicalStaff = {
-  id: string;
-  employeeCode: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  cedula: string;
-  staffType: number;
-  specialty?: string | null;
-  licenseNumber?: string | null;
-  workShift?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  isActive: boolean;
-};
-
-export type Appointment = {
-  id: string;
-  patientId: string;
-  patientName: string;
-  medicalRecordNumber: string;
-  medicalStaffId: string;
-  medicalStaffName: string;
-  specialty?: string | null;
-  scheduledStartUtc: string;
-  scheduledEndUtc: string;
-  reason: string;
-  notes?: string | null;
-  status: number;
-  cancellationReason?: string | null;
-};
-
-export type Consultation = {
-  id: string;
-  patientId: string;
-  patientName: string;
-  medicalRecordNumber: string;
-  medicalStaffId: string;
-  medicalStaffName: string;
-  specialty?: string | null;
-  appointmentId?: string | null;
-  consultationDateUtc: string;
-  reason: string;
-  symptoms?: string | null;
-  diagnosis?: string | null;
-  recommendations?: string | null;
-  notes?: string | null;
-  bloodPressure?: string | null;
-  temperatureCelsius?: number | null;
-  heartRate?: number | null;
-  weightKg?: number | null;
-  heightCm?: number | null;
-  status: number;
-};
-
-export type DrugType = {
-  id: string;
-  name: string;
-  description?: string | null;
-  isActive: boolean;
-};
-
-export type PharmaceuticalBrand = {
-  id: string;
-  name: string;
-  manufacturerCountry?: string | null;
-  website?: string | null;
-  isActive: boolean;
-};
-
-export type StorageLocation = {
-  id: string;
-  code: string;
-  name: string;
-  description?: string | null;
-  isActive: boolean;
-};
-
-export type Medication = {
-  id: string;
-  code: string;
-  name: string;
-  genericName?: string | null;
-  activeIngredient?: string | null;
-  strength?: string | null;
-  dosageForm?: string | null;
-  unitOfMeasure?: string | null;
-  drugTypeId: string;
-  drugTypeName: string;
-  pharmaceuticalBrandId?: string | null;
-  pharmaceuticalBrandName?: string | null;
-  storageLocationId?: string | null;
-  storageLocationName?: string | null;
-  requiresPrescription: boolean;
-  isControlledSubstance: boolean;
-  notes?: string | null;
-  isActive: boolean;
-  createdAtUtc: string;
-  updatedAtUtc?: string | null;
-};
+export type SessionUser = { id: string; email: string; fullName: string; roles: string[] };
+export type AuthResponse = { accessToken: string; refreshToken: string; expiresAtUtc: string; user: SessionUser };
+export type Patient = { id: string; medicalRecordNumber: string; firstName: string; lastName: string; fullName: string; cedula: string; patientType: number; sex: number; dateOfBirth?: string | null; email?: string | null; phone?: string | null; address?: string | null; emergencyContactName?: string | null; emergencyContactPhone?: string | null; isActive: boolean };
+export type MedicalStaff = { id: string; employeeCode: string; firstName: string; lastName: string; fullName: string; cedula: string; staffType: number; specialty?: string | null; licenseNumber?: string | null; workShift?: string | null; email?: string | null; phone?: string | null; isActive: boolean };
+export type Appointment = { id: string; patientId: string; patientName: string; medicalRecordNumber: string; medicalStaffId: string; medicalStaffName: string; specialty?: string | null; scheduledStartUtc: string; scheduledEndUtc: string; reason: string; notes?: string | null; status: number; cancellationReason?: string | null };
+export type Consultation = { id: string; patientId: string; patientName: string; medicalRecordNumber: string; medicalStaffId: string; medicalStaffName: string; specialty?: string | null; appointmentId?: string | null; consultationDateUtc: string; reason: string; symptoms?: string | null; diagnosis?: string | null; recommendations?: string | null; notes?: string | null; bloodPressure?: string | null; temperatureCelsius?: number | null; heartRate?: number | null; weightKg?: number | null; heightCm?: number | null; status: number };
+export type DrugType = { id: string; name: string; description?: string | null; isActive: boolean };
+export type PharmaceuticalBrand = { id: string; name: string; manufacturerCountry?: string | null; website?: string | null; isActive: boolean };
+export type StorageLocation = { id: string; code: string; name: string; description?: string | null; isActive: boolean };
+export type Medication = { id: string; code: string; name: string; genericName?: string | null; activeIngredient?: string | null; strength?: string | null; dosageForm?: string | null; unitOfMeasure?: string | null; drugTypeId: string; drugTypeName: string; pharmaceuticalBrandId?: string | null; pharmaceuticalBrandName?: string | null; storageLocationId?: string | null; storageLocationName?: string | null; requiresPrescription: boolean; isControlledSubstance: boolean; notes?: string | null; isActive: boolean; createdAtUtc: string; updatedAtUtc?: string | null };
+export type InventoryLot = { id: string; medicationId: string; medicationCode: string; medicationName: string; storageLocationId: string; storageLocationName: string; lotNumber: string; expirationDate: string; unitCost: number; quantityOnHand: number; reorderPoint: number; isLowStock: boolean; isActive: boolean };
+export type InventoryMovement = { id: string; inventoryLotId: string; type: number; quantityDelta: number; balanceAfter: number; performedBy: string; reference?: string | null; notes?: string | null; occurredAtUtc: string };
+export type LabTestDefinition = { id: string; code: string; name: string; sampleType?: string | null; unit?: string | null; referenceRange?: string | null; isActive: boolean };
+export type LabOrderItem = { id: string; labTestDefinitionId: string; testCode: string; testName: string; unit?: string | null; referenceRange?: string | null; resultValue?: string | null; resultText?: string | null; resultedBy?: string | null; resultedAtUtc?: string | null; status: number };
+export type LabOrder = { id: string; patientId: string; patientName: string; requestedByMedicalStaffId: string; requestedByName: string; consultationId?: string | null; clinicalNotes?: string | null; orderedAtUtc: string; status: number; items: LabOrderItem[] };
+export type DashboardSummary = { activePatients: number; activeStaff: number; appointmentsToday: number; openConsultations: number; activeMedications: number; lowStockLots: number; expiringLots30Days: number; pendingLabOrders: number; completedLabOrders30Days: number; consultations30Days: number };
+export type InventoryAlert = { lotId: string; medicationCode: string; medicationName: string; lotNumber: string; quantityOnHand: number; reorderPoint: number; expirationDate: string; alertType: string };
