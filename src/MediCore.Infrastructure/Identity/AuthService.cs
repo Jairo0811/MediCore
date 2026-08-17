@@ -65,13 +65,25 @@ public sealed class AuthService(
         var normalizedEmail = request.Email.Trim();
         var user = await userManager.FindByEmailAsync(normalizedEmail);
 
-        if (user is null || !user.IsActive || !await userManager.CheckPasswordAsync(user, request.Password))
+        if (user is null || !user.IsActive)
         {
-            return OperationResult<AuthResponse>.Failure(
-                "invalid_credentials",
-                "Correo electrónico o contraseña incorrectos.");
+            return InvalidCredentials();
         }
 
+        if (await userManager.IsLockedOutAsync(user))
+        {
+            return OperationResult<AuthResponse>.Failure(
+                "account_locked",
+                "La cuenta está bloqueada temporalmente por intentos fallidos.");
+        }
+
+        if (!await userManager.CheckPasswordAsync(user, request.Password))
+        {
+            await userManager.AccessFailedAsync(user);
+            return InvalidCredentials();
+        }
+
+        await userManager.ResetAccessFailedCountAsync(user);
         return OperationResult<AuthResponse>.Success(
             await IssueTokensAsync(user, cancellationToken));
     }
@@ -268,6 +280,11 @@ public sealed class AuthService(
             user.FullName,
             roles.ToArray());
     }
+
+    private static OperationResult<AuthResponse> InvalidCredentials() =>
+        OperationResult<AuthResponse>.Failure(
+            "invalid_credentials",
+            "Correo electrónico o contraseña incorrectos.");
 
     private static string GenerateRefreshToken() =>
         Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));

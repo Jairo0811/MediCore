@@ -5,6 +5,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace MediCore.Infrastructure.Validation;
 
+/// <summary>
+/// Validates Dominican cédulas using the Luhn strategy used by OGTIC Cuenta Única Registry.
+/// The implementation is adapted to C# and backend execution. See docs/reference/CEDULA_VALIDATION.md.
+/// </summary>
 public sealed class DominicanCedulaValidator(IConfiguration configuration) : ICedulaValidator
 {
     public bool IsValid(string cedula)
@@ -34,8 +38,15 @@ public sealed class DominicanCedulaValidator(IConfiguration configuration) : ICe
             string.Equals(candidate.Trim(), hash, StringComparison.OrdinalIgnoreCase));
     }
 
-    public string Normalize(string cedula) =>
-        new(cedula.Where(char.IsDigit).ToArray());
+    public string Normalize(string cedula)
+    {
+        if (string.IsNullOrWhiteSpace(cedula))
+        {
+            return string.Empty;
+        }
+
+        return new string(cedula.Where(char.IsDigit).ToArray());
+    }
 
     private static bool PassesLuhn(string cedula)
     {

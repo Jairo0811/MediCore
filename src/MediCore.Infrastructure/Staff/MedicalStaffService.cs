@@ -33,11 +33,12 @@ public sealed class MedicalStaffService(
                 (staff.Specialty != null && staff.Specialty.Contains(term)));
         }
 
-        return await query
+        var staffMembers = await query
             .OrderBy(staff => staff.LastName)
             .ThenBy(staff => staff.FirstName)
-            .Select(staff => Map(staff))
             .ToArrayAsync(cancellationToken);
+
+        return staffMembers.Select(Map).ToArray();
     }
 
     public async Task<MedicalStaffResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -96,6 +97,13 @@ public sealed class MedicalStaffService(
         if (staff is null)
         {
             return OperationResult<MedicalStaffResponse>.Failure("not_found", "Personal no encontrado.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName))
+        {
+            return OperationResult<MedicalStaffResponse>.Failure(
+                "name_required",
+                "El nombre y apellido son obligatorios.");
         }
 
         var validation = await ValidateAsync(request.Cedula, id, cancellationToken);

@@ -32,11 +32,12 @@ public sealed class PatientService(
                 patient.MedicalRecordNumber.Contains(term));
         }
 
-        return await query
+        var patients = await query
             .OrderBy(patient => patient.LastName)
             .ThenBy(patient => patient.FirstName)
-            .Select(patient => Map(patient))
             .ToArrayAsync(cancellationToken);
+
+        return patients.Select(Map).ToArray();
     }
 
     public async Task<PatientResponse?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -97,6 +98,13 @@ public sealed class PatientService(
         if (patient is null)
         {
             return OperationResult<PatientResponse>.Failure("not_found", "Paciente no encontrado.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName))
+        {
+            return OperationResult<PatientResponse>.Failure(
+                "name_required",
+                "El nombre y apellido del paciente son obligatorios.");
         }
 
         var validation = await ValidateRequestAsync(request.Cedula, id, cancellationToken);
