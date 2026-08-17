@@ -10,6 +10,14 @@ MediCore toma como **referencia funcional y académica** el proyecto grupal [Dis
 
 Este repositorio **no es un fork ni una copia**. MediCore representa una evolución individual de aquella experiencia académica: la solución se reconstruye desde cero con identidad visual, experiencia de usuario, arquitectura y decisiones tecnológicas propias.
 
+### 📜 Antecedente del enunciado académico
+
+El proyecto académico original forma parte de una colección de proyectos desarrollados en la **Universidad APEC (UNAPEC)**, tomando como referencia enunciados y proyectos propuestos por el profesor **Juan Pablo Valdez Reyes**.
+
+La base funcional utilizada para `DispensarioMedicoUnapec` proviene de un documento de **Proyecto Final de UNAPEC de 2015**, identificado en el material original como **Profesor: Juan P. Valdez**. Dicho documento plantea el desarrollo de un sistema para el Dispensario Médico de UNAPEC con gestión de tipos de fármacos, marcas, ubicaciones, medicamentos, pacientes, médicos, registro de visitas, consultas por criterios y reportes de visitas. La propuesta original especificaba su implementación con la versión vigente de **.NET Framework utilizando WinForms**.
+
+MediCore conserva ese problema de negocio como **antecedente académico y funcional**, pero lo reinterpreta con una arquitectura moderna, frontend y backend desacoplados, tecnologías actuales y un alcance considerablemente ampliado.
+
 ## 👥 Equipo Académico Original
 
 | 👤 Integrante | 🆔 Matrícula |
@@ -185,7 +193,7 @@ npm run dev
 ## 📚 Documentación
 
 - `docs/architecture/ARCHITECTURE.md` — decisiones de arquitectura.
-- `docs/reference/DISPENSARIO_UNAPEC.md` — relación con el proyecto académico de referencia.
+- `docs/reference/DISPENSARIO_UNAPEC.md` — relación con el proyecto académico de referencia y procedencia del enunciado original.
 - `docs/development/PHASE_0.md` — alcance y Definition of Done de la Fase 0.
 
 ## 👨‍💻 Desarrollo de MediCore
