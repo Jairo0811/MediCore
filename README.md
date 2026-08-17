@@ -6,9 +6,31 @@ MediCore es una plataforma moderna de gestión médica orientada a consultorios,
 
 ## 💡 Origen e inspiración
 
-MediCore toma como **referencia funcional y académica** el proyecto grupal [DispensarioMedicoUnapec](https://github.com/JosesamuelPA/DispensarioMedicoUnapec), desarrollado para el dispensario médico de UNAPEC.
+MediCore toma como **referencia funcional y académica** el proyecto grupal [DispensarioMedicoUnapec](https://github.com/JosesamuelPA/DispensarioMedicoUnapec), desarrollado como proyecto final para el dispensario médico de la Universidad APEC (UNAPEC).
 
-Este repositorio **no es un fork ni una copia**. La solución se reconstruye desde cero con identidad visual, experiencia de usuario, arquitectura y decisiones tecnológicas propias.
+Este repositorio **no es un fork ni una copia**. MediCore representa una evolución individual de aquella experiencia académica: la solución se reconstruye desde cero con identidad visual, experiencia de usuario, arquitectura y decisiones tecnológicas propias.
+
+## 👥 Equipo Académico Original
+
+| 👤 Integrante | 🆔 Matrícula |
+|---|---|
+| 👩🏻‍💻 Zodelys Luciano Francisco | A00114484 |
+| 👨🏻‍💻 José Samuel Peña Acevedo | A00107391 |
+| 👨🏻‍💻 Francis Jairo Matías Rosario | A00115261 |
+| 👩🏻‍💻 Emely Castillo Rivera | A00116415 |
+| 👨🏻‍💻 Jeuel Ortiz Medrano | A00115584 |
+
+> El equipo anterior corresponde al proyecto académico original **DispensarioMedicoUnapec**. **MediCore** es una reconstrucción y evolución independiente desarrollada por Francis Jairo Matías Rosario.
+
+## 🎓 Información Académica
+
+| Información | Detalle |
+|---|---|
+| 📖 **Asignatura** | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) |
+| 👨‍🏫 **Profesor** | Ing. Omar Antonio De Jesus De La Cruz Gonzalez |
+| 🏫 **Institución** | Universidad APEC (UNAPEC) |
+| 📅 **Período académico** | Enero - Abril 2026 |
+| 📁 **Tipo de entrega** | Proyecto Final |
 
 ## 🧩 Dominios
 
@@ -19,31 +41,40 @@ Este repositorio **no es un fork ni una copia**. La solución se reconstruye des
 | 🧪 **Laboratorio** | Órdenes, estudios y resultados clínicos |
 | ⚙️ **Administración** | Usuarios, roles, permisos, configuración, auditoría, dashboard y reportes |
 
-## 🛠️ Stack tecnológico
+## 🛠️ Stack Tecnológico
 
-### Backend
+### 🔙 Backend
 
-- 🟣 **C# / .NET 10**
-- 🌐 **ASP.NET Core Web API**
-- 🗃️ **Entity Framework Core**
-- 🛢️ **Microsoft SQL Server**
-- 📖 **OpenAPI**
-- ❤️ **ASP.NET Core Health Checks**
+| Tecnología | Uso en MediCore |
+|---|---|
+| 🟣 **C#** | Lenguaje principal del backend |
+| 💜 **.NET 10** | Plataforma de desarrollo |
+| 🌐 **ASP.NET Core Web API** | API REST desacoplada |
+| 🗃️ **Entity Framework Core** | ORM y acceso a datos |
+| 🛢️ **Microsoft SQL Server** | Base de datos relacional |
+| 📖 **OpenAPI** | Contrato y documentación de la API |
+| ❤️ **ASP.NET Core Health Checks** | Liveness y readiness de servicios |
 
-### Frontend
+### 🎨 Frontend
 
-- ⚛️ **React 19**
-- 🔷 **TypeScript**
-- ⚡ **Vite**
+| Tecnología | Uso en MediCore |
+|---|---|
+| ⚛️ **React 19** | Construcción de la interfaz web |
+| 🔷 **TypeScript** | Tipado estático y mantenibilidad |
+| ⚡ **Vite** | Tooling, desarrollo y build del frontend |
 
-### Ingeniería e infraestructura
+### 🧱 Arquitectura, calidad e infraestructura
 
-- 🧱 **Clean Architecture**
-- 🐳 **Docker / Docker Compose**
-- 🔁 **GitHub Actions**
-- 🧪 **xUnit**
-- 🔒 **Seguridad por diseño**
-- 🧭 **REST API**
+| Tecnología / práctica | Uso en MediCore |
+|---|---|
+| 🧱 **Clean Architecture** | Separación de responsabilidades y dependencias |
+| 🧭 **REST API** | Comunicación entre frontend y backend |
+| 🐳 **Docker** | Contenedorización de servicios |
+| 🐳 **Docker Compose** | Orquestación local de Web, API y SQL Server |
+| 🔁 **GitHub Actions** | Integración continua |
+| 🧪 **xUnit** | Pruebas unitarias, integración y arquitectura |
+| 🔒 **Security by Design** | Base para autenticación, autorización y auditoría |
+| 🌿 **Git / GitHub** | Control de versiones y flujo mediante ramas y Pull Requests |
 
 ## 🏗️ Arquitectura
 
@@ -106,7 +137,7 @@ Servicios locales:
 
 ## 🧪 Validación local
 
-Backend:
+### Backend
 
 ```bash
 dotnet restore MediCore.slnx
@@ -114,7 +145,7 @@ dotnet build MediCore.slnx --configuration Release
 dotnet test MediCore.slnx --configuration Release
 ```
 
-Frontend:
+### Frontend
 
 ```bash
 cd src/MediCore.Web
@@ -157,9 +188,10 @@ npm run dev
 - `docs/reference/DISPENSARIO_UNAPEC.md` — relación con el proyecto académico de referencia.
 - `docs/development/PHASE_0.md` — alcance y Definition of Done de la Fase 0.
 
-## 👨‍💻 Autor
+## 👨‍💻 Desarrollo de MediCore
 
-**Jairo Matías**  
+**Francis Jairo Matías Rosario**  
+🆔 A00115261  
 Software Developer · República Dominicana
 
 ---
