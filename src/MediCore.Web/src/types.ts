@@ -84,3 +84,49 @@ export type Consultation = {
   heightCm?: number | null;
   status: number;
 };
+
+export type DrugType = {
+  id: string;
+  name: string;
+  description?: string | null;
+  isActive: boolean;
+};
+
+export type PharmaceuticalBrand = {
+  id: string;
+  name: string;
+  manufacturerCountry?: string | null;
+  website?: string | null;
+  isActive: boolean;
+};
+
+export type StorageLocation = {
+  id: string;
+  code: string;
+  name: string;
+  description?: string | null;
+  isActive: boolean;
+};
+
+export type Medication = {
+  id: string;
+  code: string;
+  name: string;
+  genericName?: string | null;
+  activeIngredient?: string | null;
+  strength?: string | null;
+  dosageForm?: string | null;
+  unitOfMeasure?: string | null;
+  drugTypeId: string;
+  drugTypeName: string;
+  pharmaceuticalBrandId?: string | null;
+  pharmaceuticalBrandName?: string | null;
+  storageLocationId?: string | null;
+  storageLocationName?: string | null;
+  requiresPrescription: boolean;
+  isControlledSubstance: boolean;
+  notes?: string | null;
+  isActive: boolean;
+  createdAtUtc: string;
+  updatedAtUtc?: string | null;
+};
