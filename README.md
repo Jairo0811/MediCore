@@ -40,6 +40,19 @@ MediCore conserva ese problema de negocio como **antecedente académico y funcio
 | 📅 **Período académico** | Enero - Abril 2026 |
 | 📁 **Tipo de entrega** | Proyecto Final |
 
+## 🔗 Continuidad académica
+
+MediCore forma parte de una trayectoria académica conectada dentro de los proyectos de UNAPEC documentados en este portafolio.
+
+| Tipo de continuidad | Coincidencia | Proyecto relacionado |
+|---|---|---|
+| 👨‍🏫 Profesor recurrente | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** | [CineGest](https://github.com/Jairo0811/CineGest) — Desarrollo de Software con Tecnología Open Source 1 (ISO-610) |
+| 📅 Mismo período académico | **Enero - Abril 2026** | CineGest e ISO-605 fueron cursadas durante el mismo cuatrimestre |
+
+Esto documenta una continuidad docente directa: durante **Enero - Abril de 2026**, Francis Jairo Matías Rosario desarrolló proyectos finales de **ISO-605** y **ISO-610** con el mismo profesor, abordando dos líneas tecnológicas distintas: tecnología propietaria y tecnología open source.
+
+> Para identificar continuidad entre compañeros se exige coincidencia inequívoca de **nombre y matrícula**. No se infieren relaciones únicamente por similitud de nombres o por una matrícula aislada.
+
 ## 🧩 Dominios
 
 | Área | Alcance previsto |
