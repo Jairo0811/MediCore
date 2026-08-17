@@ -7,8 +7,7 @@ La Fase 7 separa el catálogo farmacéutico de la existencia física. Cada medic
 ### Implementado
 
 - lotes por medicamento y ubicación;
-- existencia inicial;
-- costo unitario;
+- existencia inicial y costo unitario;
 - punto de reposición;
 - entradas, dispensaciones y ajustes;
 - prevención de existencias negativas;
@@ -35,20 +34,19 @@ La Fase 7 separa el catálogo farmacéutico de la existencia física. Cada medic
 
 ### Implementado
 
-- pacientes activos;
-- personal activo;
+- pacientes y personal activos;
 - citas del día;
 - consultas abiertas y actividad de 30 días;
 - medicamentos activos;
 - lotes con stock bajo;
 - lotes próximos a vencer en 30 días;
-- órdenes de laboratorio pendientes;
-- órdenes completadas en los últimos 30 días;
-- feed de alertas de inventario.
+- órdenes de laboratorio pendientes y completadas;
+- feed de alertas de inventario;
+- reporte operacional por rango de fechas con citas, consultas, laboratorio y movimientos de inventario.
 
 Los indicadores se calculan desde las fuentes transaccionales de MediCore; no se mantienen contadores duplicados.
 
-## Fase 10 — Hardening, observabilidad, QA y v1.0.0
+## Fase 10 — Hardening, observabilidad, auditoría, QA y v1.0.0
 
 ### Seguridad
 
@@ -56,7 +54,14 @@ Los indicadores se calculan desde las fuentes transaccionales de MediCore; no se
 - bootstrap de administrador prohibido en Production;
 - rate limiting para login, refresh, logout y bootstrap;
 - headers `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` y `Permissions-Policy`;
-- RBAC validado en backend para módulos clínicos, farmacia, inventario, laboratorio y analítica.
+- RBAC validado en backend y navegación frontend alineada con permisos.
+
+### Auditoría
+
+- registro central de operaciones exitosas `POST`, `PUT`, `PATCH` y `DELETE`;
+- usuario autenticado cuando está disponible;
+- entidad, identificador, IP, fecha UTC, estado HTTP y correlation ID;
+- consulta de logs restringida a `Administrator` y `Auditor`.
 
 ### Observabilidad
 
@@ -67,7 +72,7 @@ Los indicadores se calculan desde las fuentes transaccionales de MediCore; no se
 
 ### Persistencia
 
-La versión 1.0.0 incorpora una migración EF Core inicial versionada. En desarrollo puede aplicarse automáticamente; en Production debe aplicarse explícitamente antes de iniciar la API.
+MediCore v1.0.0 incorpora una migración EF Core inicial versionada y un `ModelSnapshot`. En desarrollo puede aplicarse automáticamente al iniciar; en Production la migración debe revisarse y aplicarse explícitamente antes de iniciar la API.
 
 ### QA
 
@@ -87,6 +92,8 @@ La versión 1.0.0 incorpora una migración EF Core inicial versionada. En desarr
 /api/laboratory/items/{id}/result
 /api/analytics/dashboard
 /api/analytics/inventory-alerts
+/api/analytics/operational-report
+/api/audit/logs
 ```
 
 ## Definition of Done
@@ -95,5 +102,6 @@ La versión 1.0.0 incorpora una migración EF Core inicial versionada. En desarr
 - Build backend y frontend en Release.
 - Tests verdes.
 - CI verde.
+- Migración EF Core versionada.
 - Documentación de despliegue y seguridad.
 - Versión de API `1.0.0`.
