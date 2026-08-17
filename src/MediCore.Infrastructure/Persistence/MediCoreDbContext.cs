@@ -2,6 +2,7 @@ using MediCore.Domain.Appointments;
 using MediCore.Domain.Audit;
 using MediCore.Domain.Consultations;
 using MediCore.Domain.Patients;
+using MediCore.Domain.Pharmacy;
 using MediCore.Domain.Staff;
 using MediCore.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,10 @@ public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> option
     public DbSet<MedicalStaff> MedicalStaff => Set<MedicalStaff>();
     public DbSet<Appointment> Appointments => Set<Appointment>();
     public DbSet<Consultation> Consultations => Set<Consultation>();
+    public DbSet<DrugType> DrugTypes => Set<DrugType>();
+    public DbSet<PharmaceuticalBrand> PharmaceuticalBrands => Set<PharmaceuticalBrand>();
+    public DbSet<StorageLocation> StorageLocations => Set<StorageLocation>();
+    public DbSet<Medication> Medications => Set<Medication>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
