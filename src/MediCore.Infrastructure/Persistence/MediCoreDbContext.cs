@@ -1,6 +1,8 @@
 using MediCore.Domain.Appointments;
 using MediCore.Domain.Audit;
 using MediCore.Domain.Consultations;
+using MediCore.Domain.Inventory;
+using MediCore.Domain.Laboratory;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Pharmacy;
 using MediCore.Domain.Staff;
@@ -11,8 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MediCore.Infrastructure.Persistence;
 
-public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> options)
-    : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
+public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> options) : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
 {
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
@@ -24,36 +25,25 @@ public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> option
     public DbSet<PharmaceuticalBrand> PharmaceuticalBrands => Set<PharmaceuticalBrand>();
     public DbSet<StorageLocation> StorageLocations => Set<StorageLocation>();
     public DbSet<Medication> Medications => Set<Medication>();
+    public DbSet<InventoryLot> InventoryLots => Set<InventoryLot>();
+    public DbSet<InventoryMovement> InventoryMovements => Set<InventoryMovement>();
+    public DbSet<LabTestDefinition> LabTestDefinitions => Set<LabTestDefinition>();
+    public DbSet<LabOrder> LabOrders => Set<LabOrder>();
+    public DbSet<LabOrderItem> LabOrderItems => Set<LabOrderItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(MediCoreDbContext).Assembly);
-
-        modelBuilder.Entity<ApplicationUser>(entity =>
-        {
-            entity.Property(user => user.FullName).HasMaxLength(160).IsRequired();
-        });
-
+        modelBuilder.Entity<ApplicationUser>(entity => entity.Property(user => user.FullName).HasMaxLength(160).IsRequired());
         modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.HasKey(token => token.Id);
-            entity.Property(token => token.TokenHash).HasMaxLength(64).IsRequired();
-            entity.HasIndex(token => token.TokenHash).IsUnique();
-            entity.HasOne(token => token.User)
-                .WithMany()
-                .HasForeignKey(token => token.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasKey(token => token.Id); entity.Property(token => token.TokenHash).HasMaxLength(64).IsRequired(); entity.HasIndex(token => token.TokenHash).IsUnique();
+            entity.HasOne(token => token.User).WithMany().HasForeignKey(token => token.UserId).OnDelete(DeleteBehavior.Cascade);
         });
-
         modelBuilder.Entity<AuditLog>(entity =>
         {
-            entity.Property(log => log.Action).HasMaxLength(100).IsRequired();
-            entity.Property(log => log.EntityName).HasMaxLength(120).IsRequired();
-            entity.Property(log => log.EntityId).HasMaxLength(80);
-            entity.Property(log => log.IpAddress).HasMaxLength(64);
-            entity.Property(log => log.Details).HasMaxLength(2000);
-            entity.HasIndex(log => log.CreatedAtUtc);
+            entity.Property(log => log.Action).HasMaxLength(100).IsRequired(); entity.Property(log => log.EntityName).HasMaxLength(120).IsRequired(); entity.Property(log => log.EntityId).HasMaxLength(80); entity.Property(log => log.IpAddress).HasMaxLength(64); entity.Property(log => log.Details).HasMaxLength(2000); entity.HasIndex(log => log.CreatedAtUtc);
         });
     }
 }
