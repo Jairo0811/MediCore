@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+.git/
+.github/
+.env
+.env.*
+!.env.example
+.vs/
+.vscode/
+.idea/
+README.md
+docs/
+branding/
