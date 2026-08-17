@@ -86,6 +86,7 @@ Este vínculo se documenta como una **trayectoria institucional compartida**, no
 | **José Samuel Peña Acevedo** | A00107391 | **2017-4611** | ITLA → UNAPEC; coincidencia posterior en MediCore |
 
 Este cruce es adicional a la continuidad por estudiante y profesor y no se utiliza como evidencia de materias compartidas en ITLA.
+
 ## 🧩 Dominios
 
 | Área | Alcance previsto |
