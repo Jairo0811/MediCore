@@ -56,6 +56,7 @@ app.MapAuthEndpoints();
 app.MapPatientEndpoints();
 app.MapMedicalStaffEndpoints();
 app.MapAppointmentEndpoints();
+app.MapConsultationEndpoints();
 
 app.MapHealthChecks("/api/health/live", new HealthCheckOptions
 {

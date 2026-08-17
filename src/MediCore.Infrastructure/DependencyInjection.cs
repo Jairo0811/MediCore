@@ -1,10 +1,12 @@
 using System.Text;
 using MediCore.Application.Appointments;
 using MediCore.Application.Common;
+using MediCore.Application.Consultations;
 using MediCore.Application.Identity;
 using MediCore.Application.Patients;
 using MediCore.Application.Staff;
 using MediCore.Infrastructure.Appointments;
+using MediCore.Infrastructure.Consultations;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Patients;
 using MediCore.Infrastructure.Persistence;
@@ -81,6 +83,7 @@ public static class DependencyInjection
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IMedicalStaffService, MedicalStaffService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IConsultationService, ConsultationService>();
 
         services
             .AddHealthChecks()

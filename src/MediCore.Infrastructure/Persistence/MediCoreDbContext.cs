@@ -1,5 +1,6 @@
 using MediCore.Domain.Appointments;
 using MediCore.Domain.Audit;
+using MediCore.Domain.Consultations;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Staff;
 using MediCore.Infrastructure.Identity;
@@ -17,6 +18,7 @@ public sealed class MediCoreDbContext(DbContextOptions<MediCoreDbContext> option
     public DbSet<Patient> Patients => Set<Patient>();
     public DbSet<MedicalStaff> MedicalStaff => Set<MedicalStaff>();
     public DbSet<Appointment> Appointments => Set<Appointment>();
+    public DbSet<Consultation> Consultations => Set<Consultation>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
