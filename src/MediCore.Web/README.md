@@ -1,15 +1,18 @@
 # MediCore.Web
 
-Frontend desacoplado de MediCore.
+Frontend de MediCore construido con React, TypeScript y Vite.
 
-## Stack previsto
+## Desarrollo local
 
-- React
-- TypeScript
-- Vite
-- React Router
-- TanStack Query
-- React Hook Form
-- Zod
+```bash
+npm install
+npm run dev
+```
 
-El scaffold ejecutable del frontend se incorporará dentro de la Fase 0 antes de considerar la fundación completada. La aplicación web consumirá exclusivamente los contratos publicados por `MediCore.Api`.
+La variable `VITE_API_BASE_URL` permite cambiar la URL de la API. Por defecto se utiliza `http://localhost:8080`.
+
+## Build
+
+```bash
+npm run build
+```

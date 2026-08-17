@@ -4,29 +4,57 @@ on:
   push:
     branches:
       - main
-      - "chore/**"
       - "feature/**"
+      - "chore/**"
       - "fix/**"
   pull_request:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   backend:
-    name: Backend build
+    name: Backend (.NET)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: 10.0.x
 
       - name: Restore
         run: dotnet restore MediCore.slnx
 
       - name: Build
         run: dotnet build MediCore.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test MediCore.slnx --configuration Release --no-build --verbosity normal
+
+  frontend:
+    name: Frontend (React)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/MediCore.Web
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Type-check and build
+        run: npm run build
