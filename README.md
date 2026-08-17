@@ -1,5 +1,10 @@
 <p align="center">
-  <img src="branding/cover.png" alt="MediCore — La gestión médica en un solo lugar" width="100%" />
+  <img src="branding/cover.png" alt="MediCore — La gestión médica en un solo lugar" width="720" />
+</p>
+
+
+<p align="center">
+  <img src="https://img.shields.io/badge/UNAPEC-ISO--605-003B70?style=for-the-badge" alt="UNAPEC ISO-605">
 </p>
 
 
