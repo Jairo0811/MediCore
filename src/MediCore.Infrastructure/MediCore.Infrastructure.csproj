@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../MediCore.Application/MediCore.Application.csproj" />
+    <ProjectReference Include="../MediCore.Domain/MediCore.Domain.csproj" />
+  </ItemGroup>
+</Project>

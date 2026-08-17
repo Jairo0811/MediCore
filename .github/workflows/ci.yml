@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - "chore/**"
+      - "feature/**"
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend:
+    name: Backend build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore MediCore.slnx
+
+      - name: Build
+        run: dotnet build MediCore.slnx --configuration Release --no-restore
