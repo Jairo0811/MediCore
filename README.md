@@ -68,10 +68,10 @@ MediCore documenta continuidad académica verificable por **compañeros**, **pro
 
 **Emely Marie Castillo Rivera (A00110380)** coincidió con Francis Jairo Matías Rosario primero en **MediCore (ISO-605)** durante **Enero - Abril de 2026** y posteriormente en [**EcoSoft**](https://github.com/Jairo0811/Ecosoft), correspondiente a **Proyecto de Software 1 (ISO-705)** durante **Mayo - Agosto de 2026**.
 
-| Orden | Asignatura | Proyecto | Período | Estudiante |
-|---:|---|---|---|---|
-| 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 | **Emely Marie Castillo Rivera — A00110380** |
-| 2 | Proyecto de Software 1 (ISO-705) | [**EcoSoft**](https://github.com/Jairo0811/Ecosoft) | Mayo - Agosto 2026 | **Emely Marie Castillo Rivera — A00110380** |
+| Orden | Asignatura | Proyecto | Período |
+|---:|---|---|---|
+| 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 |
+| 2 | Proyecto de Software 1 (ISO-705) | [**EcoSoft**](https://github.com/Jairo0811/Ecosoft) | Mayo - Agosto 2026 |
 
 La coincidencia se considera verificada por **nombre completo y matrícula**.
 
