@@ -30,7 +30,7 @@ Este repositorio **no es un fork ni una copia**. MediCore representa una reconst
 
 ### 📜 Antecedente del enunciado académico
 
-La base funcional de `DispensarioMedicoUnapec` proviene de una presentación de **Proyecto Final de Universidad APEC de 2020**, identificada como **Profesor: Juan P. Valdez**. El enunciado proponía gestionar tipos de fármacos, marcas, ubicaciones, medicamentos, pacientes, médicos, visitas, consultas y reportes.
+La base funcional de `DispensarioMedicoUnapec` proviene de una presentación de **Proyecto Final de Universidad APEC de 2020**, identificada como **Profesor: Juan Pablo Valdez Reyes**. El enunciado proponía gestionar tipos de fármacos, marcas, ubicaciones, medicamentos, pacientes, médicos, visitas, consultas y reportes.
 
 MediCore conserva ese problema de negocio como antecedente y lo reinterpreta con API y frontend desacoplados, RBAC, persistencia moderna, CI, contenedores, trazabilidad y un alcance clínico considerablemente ampliado.
 
@@ -79,18 +79,18 @@ La coincidencia se considera verificada por **nombre completo y matrícula**.
 
 El profesor **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** impartió durante **Enero - Abril de 2026** dos asignaturas en las que se desarrollaron proyectos finales distintos: **ISO-605**, origen directo de MediCore, e **ISO-610**, origen de [**CineGest**](https://github.com/Jairo0811/CineGest).
 
-| Orden | Asignatura | Proyecto | Período | Profesor |
-|---:|---|---|---|---|
-| 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** |
-| 2 | Desarrollo de Software con Tecnología Open Source 1 (ISO-610) | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enero - Abril 2026 | **Ing. Omar Antonio De Jesus De La Cruz Gonzalez** |
+| Orden | Asignatura | Proyecto | Período |
+|---:|---|---|---|
+| 1 | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) | **MediCore** | Enero - Abril 2026 |
+| 2 | Desarrollo de Software con Tecnología Open Source 1 (ISO-610) | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enero - Abril 2026 |
 
-### 📚 Línea académica de Juan P. Valdez
+### 📚 Línea académica de Juan Pablo Valdez Reyes
 
 | Orden | Enunciado académico | Evolución en el portafolio | Relación |
 |---:|---|---|---|
-| 1 | Dispensario Médico de UNAPEC | **MediCore** | Enunciado de Proyecto Final de Juan P. Valdez |
-| 2 | Sistema de Video Club | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enunciado de Proyecto Final de Juan P. Valdez |
-| 3 | Sistema de Rentcar | [**RentCarRD**](https://github.com/Jairo0811/RentCarRD) | Enunciado de Proyecto Final de Juan P. Valdez |
+| 1 | Dispensario Médico de UNAPEC | **MediCore** | Enunciado de Proyecto Final de Juan Pablo Valdez Reyes |
+| 2 | Sistema de Video Club | [**CineGest**](https://github.com/Jairo0811/CineGest) | Enunciado de Proyecto Final de Juan Pablo Valdez Reyes |
+| 3 | Sistema de Rentcar | [**RentCarRD**](https://github.com/Jairo0811/RentCarRD) | Enunciado de Proyecto Final de Juan Pablo Valdez Reyes |
 
 Esta relación representa **continuidad por origen del enunciado**, no repetición docente. El profesor efectivo de MediCore y CineGest durante sus implementaciones académicas de 2026 fue **Ing. Omar Antonio De Jesus De La Cruz Gonzalez**.
 
