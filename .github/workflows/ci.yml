@@ -38,7 +38,7 @@ jobs:
         run: dotnet test MediCore.slnx --configuration Release --no-build --verbosity normal
 
   frontend:
-    name: Frontend (React)
+    name: Frontend (React + QA)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -56,5 +56,17 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Type-check and build
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Unit and component tests
+        run: npm run test:unit
+
+      - name: Build
         run: npm run build
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E and accessibility smoke tests
+        run: npm run test:e2e

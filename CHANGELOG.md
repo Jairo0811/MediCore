@@ -27,3 +27,13 @@ Todas las modificaciones relevantes de MediCore se documentan en este archivo.
 - Bootstrap deshabilitado obligatoriamente en Production.
 - Validación estricta de secretos JWT para Production.
 - RBAC aplicado en backend para cada dominio funcional.
+
+### Academic Final Edition — 2026-09-04
+
+- Versión del paquete React alineada con MediCore `1.0.0`.
+- QA frontend incorporado con Vitest y React Testing Library.
+- Smoke tests E2E incorporados con Playwright.
+- Auditoría automatizada de accesibilidad mediante axe-core.
+- Skip link, foco visible, navegación semántica, regiones de estado y soporte de reducción de movimiento.
+- CI ampliado para ejecutar type-check, unit/component tests, build, Playwright y axe.
+- Documento de cierre académico y guía específica de QA frontend.

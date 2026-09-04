@@ -23,17 +23,47 @@ function LoginView({ onAuthenticated }: { onAuthenticated: (session: AuthRespons
   const [busy, setBusy] = useState(false);
 
   async function submit(event: FormEvent) {
-    event.preventDefault(); setBusy(true); setError(null);
-    try { onAuthenticated(await authenticate(mode, email, password, fullName)); }
-    catch (caught) { setError(caught instanceof Error ? caught.message : 'No fue posible iniciar sesión.'); }
-    finally { setBusy(false); }
+    event.preventDefault();
+    setBusy(true);
+    setError(null);
+
+    try {
+      onAuthenticated(await authenticate(mode, email, password, fullName));
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'No fue posible iniciar sesión.');
+    } finally {
+      setBusy(false);
+    }
   }
 
-  return <main className="auth-shell"><section className="auth-card"><div className="brand-inline"><span className="brand-mark">+</span><div><strong>Medi<span>Core</span></strong><small>La gestión médica en un solo lugar.</small></div></div><p className="eyebrow">Clinical Operations Platform</p><h1>{mode === 'login' ? 'Acceso seguro' : 'Administrador inicial'}</h1><p className="muted">{mode === 'login' ? 'Ingresa con una cuenta autorizada de MediCore.' : 'Disponible únicamente mientras no existan usuarios y el bootstrap esté habilitado.'}</p>{error && <div className="alert alert--error" role="alert">{error}</div>}<form onSubmit={submit} className="form-grid form-grid--single">{mode === 'bootstrap' && <label>Nombre completo<input value={fullName} onChange={(e) => setFullName(e.target.value)} required /></label>}<label>Correo electrónico<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label><label>Contraseña<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={10} required /></label><button className="button button--primary" disabled={busy}>{busy ? 'Procesando…' : mode === 'login' ? 'Iniciar sesión' : 'Crear administrador'}</button></form><button className="button button--link" onClick={() => { setMode(mode === 'login' ? 'bootstrap' : 'login'); setError(null); }}>{mode === 'login' ? 'Configurar primer administrador' : 'Volver al inicio de sesión'}</button></section></main>;
+  function toggleMode() {
+    setMode(mode === 'login' ? 'bootstrap' : 'login');
+    setError(null);
+  }
+
+  return <>
+    <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
+    <main id="main-content" className="auth-shell" tabIndex={-1}>
+      <section className="auth-card" aria-labelledby="auth-title">
+        <div className="brand-inline"><span className="brand-mark" aria-hidden="true">+</span><div><strong>Medi<span>Core</span></strong><small>La gestión médica en un solo lugar.</small></div></div>
+        <p className="eyebrow">Clinical Operations Platform</p>
+        <h1 id="auth-title">{mode === 'login' ? 'Acceso seguro' : 'Administrador inicial'}</h1>
+        <p className="muted">{mode === 'login' ? 'Ingresa con una cuenta autorizada de MediCore.' : 'Disponible únicamente mientras no existan usuarios y el bootstrap esté habilitado.'}</p>
+        {error && <div className="alert alert--error" role="alert">{error}</div>}
+        <form onSubmit={submit} className="form-grid form-grid--single">
+          {mode === 'bootstrap' && <label>Nombre completo<input value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="name" required /></label>}
+          <label>Correo electrónico<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required /></label>
+          <label>Contraseña<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={10} required /></label>
+          <button type="submit" className="button button--primary" disabled={busy}>{busy ? 'Procesando…' : mode === 'login' ? 'Iniciar sesión' : 'Crear administrador'}</button>
+        </form>
+        <button type="button" className="button button--link" onClick={toggleMode}>{mode === 'login' ? 'Configurar primer administrador' : 'Volver al inicio de sesión'}</button>
+      </section>
+    </main>
+  </>;
 }
 
 function Overview({ apiState }: { apiState: ApiState }) {
-  return <section className="overview"><div className="welcome-card"><p className="eyebrow">MediCore v1.0.0</p><h2>Operación médica centralizada</h2><p>Plataforma completa con identidad, atención clínica, farmacia, inventario, laboratorio, analítica, auditoría y hardening de producción.</p><div className={`api-status api-status--${apiState}`}><span className="status-dot" /> API {apiState === 'checking' ? 'verificando' : apiState === 'online' ? 'en línea' : 'sin conexión'}</div></div><div className="feature-grid"><article><span>01</span><strong>Identidad</strong><small>JWT, refresh tokens y RBAC</small></article><article><span>02–05</span><strong>Core clínico</strong><small>Pacientes, personal, agenda e historia</small></article><article><span>06</span><strong>Farmacia</strong><small>Catálogo farmacéutico</small></article><article><span>07</span><strong>Inventario</strong><small>Lotes, kardex y vencimientos</small></article><article><span>08</span><strong>Laboratorio</strong><small>Órdenes, pruebas y resultados</small></article><article><span>09</span><strong>Analítica</strong><small>KPIs, alertas y reportes</small></article><article><span>10</span><strong>Producción</strong><small>Auditoría, observabilidad y QA</small></article></div></section>;
+  return <section className="overview" aria-labelledby="overview-title"><div className="welcome-card"><p className="eyebrow">MediCore v1.0.0</p><h2 id="overview-title">Operación médica centralizada</h2><p>Plataforma completa con identidad, atención clínica, farmacia, inventario, laboratorio, analítica, auditoría y hardening de producción.</p><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" /> API {apiState === 'checking' ? 'verificando' : apiState === 'online' ? 'en línea' : 'sin conexión'}</div></div><div className="feature-grid"><article><span>01</span><strong>Identidad</strong><small>JWT, refresh tokens y RBAC</small></article><article><span>02–05</span><strong>Core clínico</strong><small>Pacientes, personal, agenda e historia</small></article><article><span>06</span><strong>Farmacia</strong><small>Catálogo farmacéutico</small></article><article><span>07</span><strong>Inventario</strong><small>Lotes, kardex y vencimientos</small></article><article><span>08</span><strong>Laboratorio</strong><small>Órdenes, pruebas y resultados</small></article><article><span>09</span><strong>Analítica</strong><small>KPIs, alertas y reportes</small></article><article><span>10</span><strong>Producción</strong><small>Auditoría, observabilidad y QA</small></article></div></section>;
 }
 
 export default function App() {
@@ -43,7 +73,11 @@ export default function App() {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`${apiBaseUrl}/api/health/live`, { signal: controller.signal }).then((r) => setApiState(r.ok ? 'online' : 'offline')).catch((error: unknown) => { if (!(error instanceof DOMException && error.name === 'AbortError')) setApiState('offline'); });
+    fetch(`${apiBaseUrl}/api/health/live`, { signal: controller.signal })
+      .then((response) => setApiState(response.ok ? 'online' : 'offline'))
+      .catch((error: unknown) => {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) setApiState('offline');
+      });
     return () => controller.abort();
   }, []);
 
@@ -64,5 +98,27 @@ export default function App() {
   const canManageLab = has('Administrator', 'Laboratory');
   const canOrderLab = has('Administrator', 'Doctor');
 
-  return <div className="app-shell"><aside className="sidebar"><div className="brand-inline brand-inline--sidebar"><span className="brand-mark">+</span><div><strong>Medi<span>Core</span></strong><small>Clinical Platform</small></div></div><nav>{navigation.map((item) => <button key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} onClick={() => setSection(item.id)}><span>{item.icon}</span>{item.label}</button>)}</nav><div className="sidebar-footer"><small>Sesión activa</small><strong>{session.user.fullName}</strong><span>{roles.join(', ')}</span><button className="button button--ghost" onClick={() => { clearSession(); setSession(null); }}>Cerrar sesión</button></div></aside><main className="content"><header className="topbar"><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{navigation.find((item) => item.id === section)?.label}</h1></div><div className={`api-status api-status--${apiState}`}><span className="status-dot" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div></header>{section === 'overview' && <Overview apiState={apiState} />}{section === 'patients' && <PatientsPage />}{section === 'staff' && <StaffPage />}{section === 'appointments' && <AppointmentsPage />}{section === 'consultations' && <ConsultationsPage />}{section === 'pharmacy' && <PharmacyPage canManage={canManagePharmacy} />}{section === 'inventory' && <InventoryPage canManage={canManagePharmacy} />}{section === 'laboratory' && <LaboratoryPage canManageDefinitions={canManageLab} canOrder={canOrderLab} canResult={canManageLab} />}{section === 'analytics' && <AnalyticsPage />}{section === 'audit' && <AuditPage />}</main></div>;
+  return <>
+    <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
+    <div className="app-shell">
+      <aside className="sidebar">
+        <div className="brand-inline brand-inline--sidebar"><span className="brand-mark" aria-hidden="true">+</span><div><strong>Medi<span>Core</span></strong><small>Clinical Platform</small></div></div>
+        <nav aria-label="Navegación principal">{navigation.map((item) => <button type="button" key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} aria-current={section === item.id ? 'page' : undefined} onClick={() => setSection(item.id)}><span aria-hidden="true">{item.icon}</span>{item.label}</button>)}</nav>
+        <div className="sidebar-footer"><small>Sesión activa</small><strong>{session.user.fullName}</strong><span>{roles.join(', ')}</span><button type="button" className="button button--ghost" onClick={() => { clearSession(); setSession(null); }}>Cerrar sesión</button></div>
+      </aside>
+      <main id="main-content" className="content" tabIndex={-1}>
+        <header className="topbar"><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{navigation.find((item) => item.id === section)?.label}</h1></div><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div></header>
+        {section === 'overview' && <Overview apiState={apiState} />}
+        {section === 'patients' && <PatientsPage />}
+        {section === 'staff' && <StaffPage />}
+        {section === 'appointments' && <AppointmentsPage />}
+        {section === 'consultations' && <ConsultationsPage />}
+        {section === 'pharmacy' && <PharmacyPage canManage={canManagePharmacy} />}
+        {section === 'inventory' && <InventoryPage canManage={canManagePharmacy} />}
+        {section === 'laboratory' && <LaboratoryPage canManageDefinitions={canManageLab} canOrder={canOrderLab} canResult={canManageLab} />}
+        {section === 'analytics' && <AnalyticsPage />}
+        {section === 'audit' && <AuditPage />}
+      </main>
+    </div>
+  </>;
 }
