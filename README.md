@@ -6,10 +6,8 @@
    <img src="https://img.shields.io/badge/UNAPEC-ISO--605-003B70?style=for-the-badge" alt="UNAPEC ISO-605">
 </p>
 
-
 <p align="center">
-
-  <img src="https://img.shields.io/badge/Estado-v1.0.0%20%C2%B7%20Fases%200--10-16A34A?style=for-the-badge" alt="MediCore v1.0.0 · Fases 0 a 10">
+  <img src="https://img.shields.io/badge/Estado-v1.0.0%20%C2%B7%20Academic%20Final%20Edition-16A34A?style=for-the-badge" alt="MediCore v1.0.0 · Academic Final Edition">
   <img src="https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 10">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1220" alt="React 19">
 </p>
@@ -19,6 +17,8 @@
 > **La gestión médica en un solo lugar.**
 
 **MediCore** es una plataforma integral de gestión médica para consultorios, dispensarios y centros de salud. Unifica identidad y acceso, pacientes, personal, agenda, consultas, historia clínica, farmacia, inventario por lotes, laboratorio, analítica, reportes y auditoría sobre una arquitectura modular preparada para operación profesional.
+
+La versión **v1.0.0** representa la **Academic Final Edition** de MediCore: el alcance académico de las Fases 0–10 queda formalmente completado, validado y congelado, con QA frontend, pruebas E2E, controles automatizados de accesibilidad y CI reproducible.
 
 ---
 
@@ -56,7 +56,7 @@ MediCore conserva ese problema de negocio como antecedente y lo reinterpreta con
 | 👨‍🏫 **Profesor** | Ing. Omar Antonio De Jesus De La Cruz Gonzalez |
 | 🏫 **Institución** | Universidad APEC (UNAPEC) |
 | 📅 **Período académico** | Enero - Abril 2026 |
-| 📁 **Tipo de entrega** | Proyecto Final |
+| 📁 **Tipo de entrega** | Proyecto Final · Academic Final Edition v1.0.0 |
 
 ---
 
@@ -123,6 +123,31 @@ No se infiere que ambos hayan cursado una misma asignatura en ITLA; la coinciden
 | Hardening | ✅ | Rate limiting, security headers, secretos de Production y observabilidad |
 | Persistencia | ✅ | Migración EF Core inicial versionada y `ModelSnapshot` |
 | Frontend | ✅ | UI modular con navegación alineada a RBAC |
+| QA frontend | ✅ | Vitest, React Testing Library, type-check y build de producción |
+| E2E y accesibilidad | ✅ | Playwright, axe-core, teclado, skip link, foco visible y WCAG automatizado |
+| CI reproducible | ✅ | Node.js 24, `package-lock.json`, `npm ci`, backend y frontend QA |
+| Release | ✅ | `v1.0.0` publicada como **Academic Final Edition** |
+
+---
+
+## 🎓 Academic Final Edition
+
+MediCore queda formalmente cerrado en **v1.0.0** como proyecto académico completo de **Universidad APEC (UNAPEC)** para **Desarrollo de Software con Tecnología Propietaria 1 (ISO-605)**.
+
+La edición final incorpora, además del alcance funcional de las Fases 0–10:
+
+- pruebas unitarias y de componentes del frontend con **Vitest** y **React Testing Library**;
+- smoke tests E2E con **Playwright**;
+- auditoría automatizada de accesibilidad con **axe-core**;
+- skip link, foco visible, `aria-current`, regiones `aria-live`, `autocomplete` y soporte de `prefers-reduced-motion`;
+- CI completo para backend y frontend;
+- instalación determinista de dependencias con `package-lock.json` y `npm ci`;
+- documentación específica de QA, alcance académico y política de mantenimiento;
+- Release oficial [`v1.0.0 — Academic Final Edition`](https://github.com/Jairo0811/MediCore/releases/tag/v1.0.0).
+
+El alcance queda **congelado**. Nuevas capacidades sustanciales como facturación, seguros, telemedicina, HL7/FHIR o receta electrónica no forman parte de esta entrega y solo deberían incorporarse si existe una justificación académica concreta.
+
+Después de v1.0.0, el mantenimiento previsto se limita principalmente a corrección de defectos, seguridad, dependencias, compatibilidad y documentación.
 
 ---
 
@@ -211,6 +236,11 @@ Consulta [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATIO
 - **Git / GitHub**
 - **GitHub Actions**
 - **xUnit**
+- **Vitest**
+- **React Testing Library**
+- **Playwright**
+- **axe-core**
+- **npm ci + package-lock.json** para instalaciones reproducibles
 
 ---
 
@@ -236,7 +266,8 @@ MediCore/
 │   └── MediCore.Web/
 │       ├── pages/
 │       ├── components/
-│       └── utils/
+│       ├── utils/
+│       └── e2e/
 ├── tests/
 │   ├── MediCore.UnitTests/
 │   ├── MediCore.IntegrationTests/
@@ -366,9 +397,15 @@ dotnet build MediCore.slnx --configuration Release
 dotnet test MediCore.slnx --configuration Release
 
 cd src/MediCore.Web
-npm install
+npm ci
+npm run typecheck
+npm run test:unit
 npm run build
+npm run test:e2e:install
+npm run test:e2e
 ```
+
+La validación frontend cubre type-check, pruebas unitarias/de componentes, build de producción y smoke tests E2E con auditoría automatizada de accesibilidad mediante axe-core.
 
 ---
 
@@ -388,6 +425,8 @@ npm run build
 | **9** | Dashboard, analítica y reportes | ✅ Implementada |
 | **10** | Hardening, observabilidad, auditoría, QA y `v1.0.0` | ✅ Implementada |
 
+> **Roadmap académico completado.** MediCore no requiere nuevas fases para considerarse finalizado como entrega académica.
+
 ---
 
 ## ✅ Principios
@@ -398,11 +437,13 @@ Clean Code · SOLID · DRY · KISS · Separación de responsabilidades · Seguri
 
 ## 📚 Documentación
 
+- [`docs/ACADEMIC_FINAL_EDITION.md`](docs/ACADEMIC_FINAL_EDITION.md) — cierre, alcance congelado y política de mantenimiento de la edición académica.
 - [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE.md) — arquitectura.
 - [`docs/development/PHASE_0.md`](docs/development/PHASE_0.md) — fundación técnica.
 - [`docs/development/PHASES_1_5.md`](docs/development/PHASES_1_5.md) — núcleo clínico.
 - [`docs/development/PHASE_6.md`](docs/development/PHASE_6.md) — farmacia.
 - [`docs/development/PHASES_7_10.md`](docs/development/PHASES_7_10.md) — inventario, laboratorio, analítica y hardening.
+- [`docs/testing/FRONTEND_QA.md`](docs/testing/FRONTEND_QA.md) — QA frontend, Playwright y accesibilidad automatizada.
 - [`docs/deployment/PRODUCTION.md`](docs/deployment/PRODUCTION.md) — despliegue de producción.
 - [`docs/reference/DISPENSARIO_UNAPEC.md`](docs/reference/DISPENSARIO_UNAPEC.md) — procedencia académica.
 - [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATION.md) — validación dominicana.
@@ -420,4 +461,4 @@ Software Developer · República Dominicana
 
 ---
 
-<p align="center"><strong>MediCore v1.0.0</strong><br><em>La gestión médica en un solo lugar.</em></p>
+<p align="center"><strong>MediCore v1.0.0 — Academic Final Edition</strong><br><em>La gestión médica en un solo lugar.</em></p>
