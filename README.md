@@ -12,6 +12,12 @@
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1220" alt="React 19">
 </p>
 
+<p align="center">
+  <a href="https://github.com/Jairo0811/MediCore/actions/workflows/ci.yml">
+    <img src="https://github.com/Jairo0811/MediCore/actions/workflows/ci.yml/badge.svg" alt="CI">
+  </a>
+</p>
+
 <p align="center"><strong>C# · .NET 10 · ASP.NET Core · React 19 · TypeScript · Entity Framework Core · SQL Server · Docker · xUnit · GitHub Actions</strong></p>
 
 > **La gestión médica en un solo lugar.**
