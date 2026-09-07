@@ -36,7 +36,17 @@ MediCore conserva ese problema de negocio como antecedente y lo reinterpreta con
 
 ---
 
-## 👥 Equipo Académico Original
+## 🎓 Información académica
+
+| Información | Detalle |
+|---|---|
+| 📖 **Asignatura** | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) |
+| 👨‍🏫 **Profesor** | Ing. Omar Antonio De Jesus De La Cruz Gonzalez |
+| 🏫 **Institución** | Universidad APEC (UNAPEC) |
+| 📅 **Período académico** | Enero - Abril 2026 |
+| 📁 **Tipo de entrega** | Proyecto Final · Academic Final Edition v1.0.0 |
+
+### 👥 Equipo académico original
 
 | 👤 Integrante | 🆔 Matrícula |
 |---|---|
@@ -47,16 +57,6 @@ MediCore conserva ese problema de negocio como antecedente y lo reinterpreta con
 | 👨🏻‍💻 Jeuel Ortiz Medrano | A00115584 |
 
 > El equipo anterior corresponde al proyecto académico original **DispensarioMedicoUnapec**. **MediCore** es una reconstrucción y evolución independiente desarrollada posteriormente por Francis Jairo Matías Rosario.
-
-## 🎓 Información Académica
-
-| Información | Detalle |
-|---|---|
-| 📖 **Asignatura** | Desarrollo de Software con Tecnología Propietaria 1 (ISO-605) |
-| 👨‍🏫 **Profesor** | Ing. Omar Antonio De Jesus De La Cruz Gonzalez |
-| 🏫 **Institución** | Universidad APEC (UNAPEC) |
-| 📅 **Período académico** | Enero - Abril 2026 |
-| 📁 **Tipo de entrega** | Proyecto Final · Academic Final Edition v1.0.0 |
 
 ---
 
@@ -187,7 +187,7 @@ Consulta [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATIO
 
 ---
 
-## 🛠️ Stack tecnológico
+## 🧱 Stack tecnológico
 
 ### ⚙️ Backend
 
