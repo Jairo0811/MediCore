@@ -14,6 +14,19 @@ import type { AuthResponse } from './types';
 type ApiState = 'checking' | 'online' | 'offline';
 type Section = 'overview' | 'patients' | 'staff' | 'appointments' | 'consultations' | 'pharmacy' | 'inventory' | 'laboratory' | 'analytics' | 'audit';
 
+type NavigationItem = {
+  id: Section;
+  label: string;
+  icon: string;
+};
+
+function Brand({ sidebar = false }: { sidebar?: boolean }) {
+  return <div className={sidebar ? 'brand-inline brand-inline--sidebar' : 'brand-inline'}>
+    <span className="brand-mark" aria-hidden="true"><i className="fa-solid fa-heart-pulse" /></span>
+    <div><strong>Medi<span>Core</span></strong><small>{sidebar ? 'Clinical Platform' : 'La gestión médica en un solo lugar.'}</small></div>
+  </div>;
+}
+
 function LoginView({ onAuthenticated }: { onAuthenticated: (session: AuthResponse) => void }) {
   const [mode, setMode] = useState<'login' | 'bootstrap'>('login');
   const [email, setEmail] = useState('');
@@ -45,7 +58,7 @@ function LoginView({ onAuthenticated }: { onAuthenticated: (session: AuthRespons
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
     <main id="main-content" className="auth-shell" tabIndex={-1}>
       <section className="auth-card" aria-labelledby="auth-title">
-        <div className="brand-inline"><span className="brand-mark" aria-hidden="true">+</span><div><strong>Medi<span>Core</span></strong><small>La gestión médica en un solo lugar.</small></div></div>
+        <Brand />
         <p className="eyebrow">Clinical Operations Platform</p>
         <h1 id="auth-title">{mode === 'login' ? 'Acceso seguro' : 'Administrador inicial'}</h1>
         <p className="muted">{mode === 'login' ? 'Ingresa con una cuenta autorizada de MediCore.' : 'Disponible únicamente mientras no existan usuarios y el bootstrap esté habilitado.'}</p>
@@ -54,7 +67,7 @@ function LoginView({ onAuthenticated }: { onAuthenticated: (session: AuthRespons
           {mode === 'bootstrap' && <label>Nombre completo<input value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="name" required /></label>}
           <label>Correo electrónico<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required /></label>
           <label>Contraseña<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={10} required /></label>
-          <button type="submit" className="button button--primary" disabled={busy}>{busy ? 'Procesando…' : mode === 'login' ? 'Iniciar sesión' : 'Crear administrador'}</button>
+          <button type="submit" className="button button--primary" disabled={busy}><i className="fa-solid fa-shield-halved" aria-hidden="true" /> {busy ? 'Procesando…' : mode === 'login' ? 'Iniciar sesión' : 'Crear administrador'}</button>
         </form>
         <button type="button" className="button button--link" onClick={toggleMode}>{mode === 'login' ? 'Configurar primer administrador' : 'Volver al inicio de sesión'}</button>
       </section>
@@ -62,8 +75,34 @@ function LoginView({ onAuthenticated }: { onAuthenticated: (session: AuthRespons
   </>;
 }
 
+const overviewFeatures = [
+  { phase: '01', icon: 'fa-solid fa-fingerprint', title: 'Identidad', detail: 'JWT, refresh tokens y RBAC' },
+  { phase: '02–05', icon: 'fa-solid fa-stethoscope', title: 'Core clínico', detail: 'Pacientes, personal, agenda e historia' },
+  { phase: '06', icon: 'fa-solid fa-capsules', title: 'Farmacia', detail: 'Catálogo farmacéutico' },
+  { phase: '07', icon: 'fa-solid fa-boxes-stacked', title: 'Inventario', detail: 'Lotes, kardex y vencimientos' },
+  { phase: '08', icon: 'fa-solid fa-flask-vial', title: 'Laboratorio', detail: 'Órdenes, pruebas y resultados' },
+  { phase: '09', icon: 'fa-solid fa-chart-line', title: 'Analítica', detail: 'KPIs, alertas y reportes' },
+  { phase: '10', icon: 'fa-solid fa-shield-halved', title: 'Producción', detail: 'Auditoría, observabilidad y QA' },
+];
+
 function Overview({ apiState }: { apiState: ApiState }) {
-  return <section className="overview" aria-labelledby="overview-title"><div className="welcome-card"><p className="eyebrow">MediCore v1.0.0</p><h2 id="overview-title">Operación médica centralizada</h2><p>Plataforma completa con identidad, atención clínica, farmacia, inventario, laboratorio, analítica, auditoría y hardening de producción.</p><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" /> API {apiState === 'checking' ? 'verificando' : apiState === 'online' ? 'en línea' : 'sin conexión'}</div></div><div className="feature-grid"><article><span>01</span><strong>Identidad</strong><small>JWT, refresh tokens y RBAC</small></article><article><span>02–05</span><strong>Core clínico</strong><small>Pacientes, personal, agenda e historia</small></article><article><span>06</span><strong>Farmacia</strong><small>Catálogo farmacéutico</small></article><article><span>07</span><strong>Inventario</strong><small>Lotes, kardex y vencimientos</small></article><article><span>08</span><strong>Laboratorio</strong><small>Órdenes, pruebas y resultados</small></article><article><span>09</span><strong>Analítica</strong><small>KPIs, alertas y reportes</small></article><article><span>10</span><strong>Producción</strong><small>Auditoría, observabilidad y QA</small></article></div></section>;
+  return <section className="overview" aria-labelledby="overview-title">
+    <div className="welcome-card">
+      <div className="welcome-card__content">
+        <p className="eyebrow">MediCore v1.0.0</p>
+        <h2 id="overview-title">Operación médica centralizada</h2>
+        <p>Plataforma completa con identidad, atención clínica, farmacia, inventario, laboratorio, analítica, auditoría y hardening de producción.</p>
+        <div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" /> API {apiState === 'checking' ? 'verificando' : apiState === 'online' ? 'en línea' : 'sin conexión'}</div>
+      </div>
+      <div className="welcome-card__mark" aria-hidden="true"><i className="fa-solid fa-house-medical-circle-check" /></div>
+    </div>
+    <div className="feature-grid">
+      {overviewFeatures.map((feature) => <article key={feature.phase}>
+        <div className="feature-card__top"><span>{feature.phase}</span><i className={feature.icon} aria-hidden="true" /></div>
+        <strong>{feature.title}</strong><small>{feature.detail}</small>
+      </article>)}
+    </div>
+  </section>;
 }
 
 export default function App() {
@@ -85,29 +124,41 @@ export default function App() {
 
   const roles = session.user.roles;
   const has = (...allowed: string[]) => roles.some((role) => allowed.includes(role));
-  const navigation: Array<{ id: Section; label: string; icon: string }> = [{ id: 'overview', label: 'Resumen', icon: '⌂' }];
+  const navigation: NavigationItem[] = [{ id: 'overview', label: 'Resumen', icon: 'fa-solid fa-house-medical' }];
 
-  if (has('Administrator', 'Doctor', 'Nurse', 'Receptionist')) navigation.push({ id: 'patients', label: 'Pacientes', icon: '◉' }, { id: 'staff', label: 'Personal', icon: '✚' }, { id: 'appointments', label: 'Agenda', icon: '◷' });
-  if (has('Administrator', 'Doctor', 'Nurse')) navigation.push({ id: 'consultations', label: 'Consultas', icon: '▤' });
-  if (has('Administrator', 'Pharmacist', 'Doctor', 'Nurse', 'Auditor')) navigation.push({ id: 'pharmacy', label: 'Farmacia', icon: '◆' }, { id: 'inventory', label: 'Inventario', icon: '▦' });
-  if (has('Administrator', 'Doctor', 'Nurse', 'Laboratory', 'Auditor')) navigation.push({ id: 'laboratory', label: 'Laboratorio', icon: '◈' });
-  if (has('Administrator', 'Doctor', 'Nurse', 'Pharmacist', 'Laboratory', 'Auditor')) navigation.push({ id: 'analytics', label: 'Analítica', icon: '▥' });
-  if (has('Administrator', 'Auditor')) navigation.push({ id: 'audit', label: 'Auditoría', icon: '◎' });
+  if (has('Administrator', 'Doctor', 'Nurse', 'Receptionist')) navigation.push(
+    { id: 'patients', label: 'Pacientes', icon: 'fa-solid fa-user-group' },
+    { id: 'staff', label: 'Personal', icon: 'fa-solid fa-user-doctor' },
+    { id: 'appointments', label: 'Agenda', icon: 'fa-solid fa-calendar-check' },
+  );
+  if (has('Administrator', 'Doctor', 'Nurse')) navigation.push({ id: 'consultations', label: 'Consultas', icon: 'fa-solid fa-notes-medical' });
+  if (has('Administrator', 'Pharmacist', 'Doctor', 'Nurse', 'Auditor')) navigation.push(
+    { id: 'pharmacy', label: 'Farmacia', icon: 'fa-solid fa-capsules' },
+    { id: 'inventory', label: 'Inventario', icon: 'fa-solid fa-boxes-stacked' },
+  );
+  if (has('Administrator', 'Doctor', 'Nurse', 'Laboratory', 'Auditor')) navigation.push({ id: 'laboratory', label: 'Laboratorio', icon: 'fa-solid fa-flask-vial' });
+  if (has('Administrator', 'Doctor', 'Nurse', 'Pharmacist', 'Laboratory', 'Auditor')) navigation.push({ id: 'analytics', label: 'Analítica', icon: 'fa-solid fa-chart-line' });
+  if (has('Administrator', 'Auditor')) navigation.push({ id: 'audit', label: 'Auditoría', icon: 'fa-solid fa-shield-halved' });
 
   const canManagePharmacy = has('Administrator', 'Pharmacist');
   const canManageLab = has('Administrator', 'Laboratory');
   const canOrderLab = has('Administrator', 'Doctor');
+  const activeItem = navigation.find((item) => item.id === section) ?? navigation[0];
 
   return <>
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
     <div className="app-shell">
       <aside className="sidebar">
-        <div className="brand-inline brand-inline--sidebar"><span className="brand-mark" aria-hidden="true">+</span><div><strong>Medi<span>Core</span></strong><small>Clinical Platform</small></div></div>
-        <nav aria-label="Navegación principal">{navigation.map((item) => <button type="button" key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} aria-current={section === item.id ? 'page' : undefined} onClick={() => setSection(item.id)}><span aria-hidden="true">{item.icon}</span>{item.label}</button>)}</nav>
-        <div className="sidebar-footer"><small>Sesión activa</small><strong>{session.user.fullName}</strong><span>{roles.join(', ')}</span><button type="button" className="button button--ghost" onClick={() => { clearSession(); setSession(null); }}>Cerrar sesión</button></div>
+        <Brand sidebar />
+        <p className="sidebar-section-label">Operación clínica</p>
+        <nav aria-label="Navegación principal">{navigation.map((item) => <button type="button" key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} aria-current={section === item.id ? 'page' : undefined} onClick={() => setSection(item.id)}><span className="nav-item__icon" aria-hidden="true"><i className={item.icon} /></span><span>{item.label}</span></button>)}</nav>
+        <div className="sidebar-footer">
+          <div className="session-card"><span className="session-card__avatar" aria-hidden="true"><i className="fa-solid fa-user-shield" /></span><div><small>Sesión activa</small><strong>{session.user.fullName}</strong><span>{roles.join(', ')}</span></div></div>
+          <button type="button" className="button button--ghost" onClick={() => { clearSession(); setSession(null); }}><i className="fa-solid fa-arrow-right-from-bracket" aria-hidden="true" /> Cerrar sesión</button>
+        </div>
       </aside>
       <main id="main-content" className="content" tabIndex={-1}>
-        <header className="topbar"><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{navigation.find((item) => item.id === section)?.label}</h1></div><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div></header>
+        <header className="topbar"><div className="topbar__title"><span className="topbar__icon" aria-hidden="true"><i className={activeItem.icon} /></span><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{activeItem.label}</h1></div></div><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div></header>
         {section === 'overview' && <Overview apiState={apiState} />}
         {section === 'patients' && <PatientsPage />}
         {section === 'staff' && <StaffPage />}
