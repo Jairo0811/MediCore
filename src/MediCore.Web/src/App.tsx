@@ -20,10 +20,23 @@ type NavigationItem = {
   icon: string;
 };
 
+const BRAND_LOGO = '/branding/medicore-logo.png';
+const BRAND_ISOTYPE = '/branding/medicore-isotipo.png';
+
 function Brand({ sidebar = false }: { sidebar?: boolean }) {
-  return <div className={sidebar ? 'brand-inline brand-inline--sidebar' : 'brand-inline'}>
-    <span className="brand-mark" aria-hidden="true"><i className="fa-solid fa-heart-pulse" /></span>
-    <div><strong>Medi<span>Core</span></strong><small>{sidebar ? 'Clinical Platform' : 'La gestión médica en un solo lugar.'}</small></div>
+  if (!sidebar) {
+    return <div className="brand-inline brand-inline--official">
+      <img
+        className="brand-logo"
+        src={BRAND_LOGO}
+        alt="MediCore — La gestión médica en un solo lugar"
+      />
+    </div>;
+  }
+
+  return <div className="brand-inline brand-inline--sidebar brand-inline--official-sidebar">
+    <img className="brand-isotype" src={BRAND_ISOTYPE} alt="" aria-hidden="true" />
+    <div><strong>Medi<span>Core</span></strong><small>Clinical Platform</small></div>
   </div>;
 }
 
@@ -94,7 +107,9 @@ function Overview({ apiState }: { apiState: ApiState }) {
         <p>Plataforma completa con identidad, atención clínica, farmacia, inventario, laboratorio, analítica, auditoría y hardening de producción.</p>
         <div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" /> API {apiState === 'checking' ? 'verificando' : apiState === 'online' ? 'en línea' : 'sin conexión'}</div>
       </div>
-      <div className="welcome-card__mark" aria-hidden="true"><i className="fa-solid fa-house-medical-circle-check" /></div>
+      <div className="welcome-card__mark" aria-hidden="true">
+        <img className="welcome-card__isotype" src={BRAND_ISOTYPE} alt="" />
+      </div>
     </div>
     <div className="feature-grid">
       {overviewFeatures.map((feature) => <article key={feature.phase}>
