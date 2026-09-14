@@ -1,0 +1,61 @@
+/* Official MediCore brand asset integration. */
+.brand-inline--official {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1.35rem;
+}
+
+.brand-logo {
+  display: block;
+  width: min(100%, 27rem);
+  max-height: 10rem;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 12px 26px rgba(7, 90, 156, .12));
+}
+
+.brand-inline--official-sidebar {
+  align-items: center;
+  gap: .72rem;
+}
+
+.brand-isotype {
+  display: block;
+  width: 3.35rem;
+  height: 3.35rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(1, 22, 42, .3));
+}
+
+.brand-inline--official-sidebar strong {
+  font-size: 1.35rem;
+}
+
+.welcome-card__mark {
+  width: 8rem;
+  height: 8rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.welcome-card__isotype {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 28px rgba(7, 90, 156, .18));
+}
+
+@media (max-width: 760px) {
+  .brand-inline--official-sidebar {
+    justify-content: flex-start;
+  }
+
+  .brand-logo {
+    width: min(100%, 22rem);
+  }
+}
