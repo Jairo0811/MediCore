@@ -13,7 +13,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" -b -o /dev/null || exit 1"
+          "/opt/mssql-tools18/bin/sqlcmd -S tcp:localhost,1433 -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" -b -o /dev/null || exit 1"
         ]
       interval: 10s
       timeout: 5s
@@ -29,9 +29,18 @@ services:
       MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env}
     entrypoint: ["/bin/bash", "-c"]
     command: >
-      /opt/mssql-tools18/bin/sqlcmd
-      -S sqlserver -U sa -P "$$MSSQL_SA_PASSWORD" -C -b
-      -Q "IF DB_ID(N'MediCore') IS NULL CREATE DATABASE MediCore;"
+      for attempt in {1..30}; do
+        if /opt/mssql-tools18/bin/sqlcmd
+        -S tcp:sqlserver,1433 -U sa -P "$$MSSQL_SA_PASSWORD" -C -b -l 5
+        -Q "IF DB_ID(N'MediCore') IS NULL CREATE DATABASE MediCore;"; then
+          echo "MediCore database initialization completed.";
+          exit 0;
+        fi;
+        echo "SQL Server init attempt $$attempt/30 failed; retrying in 2 seconds...";
+        sleep 2;
+      done;
+      echo "SQL Server did not become ready for initialization in time.";
+      exit 1
     restart: "no"
 
   api:
