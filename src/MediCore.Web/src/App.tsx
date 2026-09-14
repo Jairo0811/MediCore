@@ -21,7 +21,7 @@ type NavigationItem = {
 };
 
 const BRAND_LOGO = '/branding/medicore-logo.png';
-const BRAND_ISOTYPE = '/branding/medicore-isotipo.png';
+const BRAND_ISOTYPE = '/branding/favicon.ico';
 
 function Brand({ sidebar = false }: { sidebar?: boolean }) {
   if (!sidebar) {
