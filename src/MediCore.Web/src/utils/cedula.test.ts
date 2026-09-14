@@ -3,16 +3,16 @@ import { formatDominicanCedula, normalizeDominicanCedula, passesDominicanCedulaL
 
 describe('Dominican cedula helpers', () => {
   it('normalizes and formats identifiers', () => {
-    expect(normalizeDominicanCedula('001-1391824-5')).toBe('00113918245');
-    expect(formatDominicanCedula('00113918245')).toBe('001-1391824-5');
+    expect(normalizeDominicanCedula('123-4567890-3')).toBe('12345678903');
+    expect(formatDominicanCedula('12345678903')).toBe('123-4567890-3');
   });
 
   it('rejects incomplete identifiers', () => {
-    expect(passesDominicanCedulaLuhn('001-1391824')).toBe(false);
+    expect(passesDominicanCedulaLuhn('123-4567890')).toBe(false);
   });
 
   it('evaluates the Luhn checksum deterministically', () => {
-    expect(passesDominicanCedulaLuhn('00113918245')).toBe(true);
-    expect(passesDominicanCedulaLuhn('00113918244')).toBe(false);
+    expect(passesDominicanCedulaLuhn('12345678903')).toBe(true);
+    expect(passesDominicanCedulaLuhn('12345678904')).toBe(false);
   });
 });
