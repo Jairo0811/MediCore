@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using MediCore.Application.Analytics;
 using MediCore.Application.Appointments;
@@ -46,10 +47,42 @@ public static class DependencyInjection
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
         var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>() ?? new JwtOptions();
         var signingKey = string.IsNullOrWhiteSpace(jwtOptions.SigningKey) ? "MediCore-Development-Key-Change-Before-Production-2026" : jwtOptions.SigningKey;
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
-            ValidateIssuer = true, ValidateAudience = true, ValidateIssuerSigningKey = true, ValidateLifetime = true,
-            ValidIssuer = jwtOptions.Issuer, ValidAudience = jwtOptions.Audience, IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)), ClockSkew = TimeSpan.FromSeconds(30)
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true,
+                ValidIssuer = jwtOptions.Issuer,
+                ValidAudience = jwtOptions.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
+                ClockSkew = TimeSpan.FromSeconds(30)
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnTokenValidated = async context =>
+                {
+                    var userIdValue = context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var tokenSecurityStamp = context.Principal?.FindFirstValue(MediCoreJwtClaimNames.SecurityStamp);
+
+                    if (!Guid.TryParse(userIdValue, out var userId) || string.IsNullOrWhiteSpace(tokenSecurityStamp))
+                    {
+                        context.Fail("The access token is not bound to a valid MediCore user session.");
+                        return;
+                    }
+
+                    var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+
+                    if (user is null || !user.IsActive || !string.Equals(user.SecurityStamp, tokenSecurityStamp, StringComparison.Ordinal))
+                    {
+                        context.Fail("The MediCore user session is no longer valid.");
+                    }
+                }
+            };
         });
         services.AddAuthorization();
         services.AddScoped<IAuthService, AuthService>(); services.AddScoped<ICedulaValidator, DominicanCedulaValidator>(); services.AddScoped<IPatientService, PatientService>(); services.AddScoped<IMedicalStaffService, MedicalStaffService>();
