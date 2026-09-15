@@ -1,0 +1,35 @@
+/* Dedicated boolean controls so global text-input styles do not distort checkboxes/radios. */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  min-height: 2.85rem;
+  color: #466477;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.checkbox-field input[type="checkbox"],
+.checkbox-field input[type="radio"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  min-height: 0;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: .25rem;
+  background: transparent;
+  box-shadow: none;
+  accent-color: #0aa99e;
+}
+
+.checkbox-field input[type="checkbox"]:focus-visible,
+.checkbox-field input[type="radio"]:focus-visible {
+  outline: 3px solid rgba(10, 169, 158, .18);
+  outline-offset: 3px;
+}
+
+.checkbox-field span {
+  line-height: 1.35;
+}

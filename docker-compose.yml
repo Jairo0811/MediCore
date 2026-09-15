@@ -13,39 +13,12 @@ services:
       test:
         [
           "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -S tcp:localhost,1433 -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" -b -o /dev/null || exit 1"
+          "/opt/mssql-tools18/bin/sqlcmd -S tcp:localhost,1433 -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -b -Q \"IF DB_ID(N'MediCore') IS NULL OR DATABASEPROPERTYEX(N'MediCore', N'Status') = N'ONLINE' SELECT 1 ELSE THROW 50001, 'MediCore database is not online', 1;\" -o /dev/null || exit 1"
         ]
       interval: 10s
       timeout: 5s
       retries: 12
       start_period: 20s
-
-  sqlserver-init:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-    environment:
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env}
-    entrypoint: ["/bin/bash", "-c"]
-    command:
-      - |
-        for attempt in {1..30}; do
-          if /opt/mssql-tools18/bin/sqlcmd \
-            -S tcp:sqlserver,1433 \
-            -U sa \
-            -P "$$MSSQL_SA_PASSWORD" \
-            -C -b -l 5 \
-            -Q "IF DB_ID(N'MediCore') IS NULL CREATE DATABASE MediCore;"; then
-            echo "MediCore database initialization completed."
-            exit 0
-          fi
-          echo "SQL Server init attempt $$attempt/30 failed; retrying in 2 seconds..."
-          sleep 2
-        done
-        echo "SQL Server did not become ready for initialization in time."
-        exit 1
-    restart: "no"
 
   api:
     build:
@@ -53,8 +26,8 @@ services:
       dockerfile: src/MediCore.Api/Dockerfile
     container_name: medicore-api
     depends_on:
-      sqlserver-init:
-        condition: service_completed_successfully
+      sqlserver:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=MediCore;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;Encrypt=False;"

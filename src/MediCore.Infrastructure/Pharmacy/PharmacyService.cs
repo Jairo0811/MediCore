@@ -144,11 +144,19 @@ public sealed class PharmacyService(MediCoreDbContext dbContext) : IPharmacyServ
             var term = search.Trim();
             query = query.Where(item => item.Code.Contains(term) || item.Name.Contains(term) || (item.GenericName != null && item.GenericName.Contains(term)) || (item.ActiveIngredient != null && item.ActiveIngredient.Contains(term)));
         }
-        return await Project(query).OrderBy(item => item.Name).ToArrayAsync(cancellationToken);
+
+        var medications = await query.OrderBy(item => item.Name).ToArrayAsync(cancellationToken);
+        return await MapMedicationsAsync(medications, cancellationToken);
     }
 
-    public async Task<MedicationResponse?> GetMedicationByIdAsync(Guid id, CancellationToken cancellationToken) =>
-        await Project(dbContext.Medications.AsNoTracking().Where(item => item.Id == id)).SingleOrDefaultAsync(cancellationToken);
+    public async Task<MedicationResponse?> GetMedicationByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var medication = await dbContext.Medications.AsNoTracking().SingleOrDefaultAsync(item => item.Id == id, cancellationToken);
+        if (medication is null) return null;
+
+        var mapped = await MapMedicationsAsync(new[] { medication }, cancellationToken);
+        return mapped.Single();
+    }
 
     public async Task<OperationResult<MedicationResponse>> CreateMedicationAsync(CreateMedicationRequest request, CancellationToken cancellationToken)
     {
@@ -192,12 +200,52 @@ public sealed class PharmacyService(MediCoreDbContext dbContext) : IPharmacyServ
         return OperationResult<bool>.Success(true);
     }
 
-    private IQueryable<MedicationResponse> Project(IQueryable<Medication> query) => query.Select(medication => new MedicationResponse(
-        medication.Id, medication.Code, medication.Name, medication.GenericName, medication.ActiveIngredient, medication.Strength, medication.DosageForm, medication.UnitOfMeasure,
-        medication.DrugTypeId, dbContext.DrugTypes.Where(item => item.Id == medication.DrugTypeId).Select(item => item.Name).First(),
-        medication.PharmaceuticalBrandId, dbContext.PharmaceuticalBrands.Where(item => item.Id == medication.PharmaceuticalBrandId).Select(item => item.Name).FirstOrDefault(),
-        medication.StorageLocationId, dbContext.StorageLocations.Where(item => item.Id == medication.StorageLocationId).Select(item => item.Name).FirstOrDefault(),
-        medication.RequiresPrescription, medication.IsControlledSubstance, medication.Notes, medication.IsActive, medication.CreatedAtUtc, medication.UpdatedAtUtc));
+    private async Task<IReadOnlyCollection<MedicationResponse>> MapMedicationsAsync(IReadOnlyCollection<Medication> medications, CancellationToken cancellationToken)
+    {
+        if (medications.Count == 0) return Array.Empty<MedicationResponse>();
+
+        var drugTypeIds = medications.Select(item => item.DrugTypeId).Distinct().ToArray();
+        var brandIds = medications.Where(item => item.PharmaceuticalBrandId.HasValue).Select(item => item.PharmaceuticalBrandId!.Value).Distinct().ToArray();
+        var locationIds = medications.Where(item => item.StorageLocationId.HasValue).Select(item => item.StorageLocationId!.Value).Distinct().ToArray();
+
+        var drugTypeNames = await dbContext.DrugTypes.AsNoTracking()
+            .Where(item => drugTypeIds.Contains(item.Id))
+            .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
+        var brandNames = await dbContext.PharmaceuticalBrands.AsNoTracking()
+            .Where(item => brandIds.Contains(item.Id))
+            .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
+        var locationNames = await dbContext.StorageLocations.AsNoTracking()
+            .Where(item => locationIds.Contains(item.Id))
+            .ToDictionaryAsync(item => item.Id, item => item.Name, cancellationToken);
+
+        return medications.Select(medication => new MedicationResponse(
+            medication.Id,
+            medication.Code,
+            medication.Name,
+            medication.GenericName,
+            medication.ActiveIngredient,
+            medication.Strength,
+            medication.DosageForm,
+            medication.UnitOfMeasure,
+            medication.DrugTypeId,
+            ResolveRequiredName(medication.DrugTypeId, drugTypeNames),
+            medication.PharmaceuticalBrandId,
+            ResolveOptionalName(medication.PharmaceuticalBrandId, brandNames),
+            medication.StorageLocationId,
+            ResolveOptionalName(medication.StorageLocationId, locationNames),
+            medication.RequiresPrescription,
+            medication.IsControlledSubstance,
+            medication.Notes,
+            medication.IsActive,
+            medication.CreatedAtUtc,
+            medication.UpdatedAtUtc)).ToArray();
+    }
+
+    private static string ResolveRequiredName(Guid id, IReadOnlyDictionary<Guid, string> names) =>
+        names.TryGetValue(id, out var name) ? name : "Tipo no disponible";
+
+    private static string? ResolveOptionalName(Guid? id, IReadOnlyDictionary<Guid, string> names) =>
+        id.HasValue && names.TryGetValue(id.Value, out var name) ? name : null;
 
     private static DrugTypeResponse Map(DrugType entity) => new(entity.Id, entity.Name, entity.Description, entity.IsActive);
     private static PharmaceuticalBrandResponse Map(PharmaceuticalBrand entity) => new(entity.Id, entity.Name, entity.ManufacturerCountry, entity.Website, entity.IsActive);
