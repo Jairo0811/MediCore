@@ -236,7 +236,8 @@ public sealed class AuthService(
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Name, user.FullName)
+            new(ClaimTypes.Name, user.FullName),
+            new(MediCoreJwtClaimNames.SecurityStamp, user.SecurityStamp ?? string.Empty)
         };
 
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
