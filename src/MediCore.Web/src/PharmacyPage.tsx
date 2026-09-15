@@ -61,6 +61,7 @@ export default function PharmacyPage({ canManage }: Props) {
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [medicationForm, setMedicationForm] = useState<MedicationForm>(emptyMedication);
+  const [editingMedicationId, setEditingMedicationId] = useState<string | null>(null);
   const [drugTypeForm, setDrugTypeForm] = useState({ name: '', description: '' });
   const [brandForm, setBrandForm] = useState({ name: '', manufacturerCountry: '', website: '' });
   const [locationForm, setLocationForm] = useState({ code: '', name: '', description: '' });
@@ -132,27 +133,68 @@ export default function PharmacyPage({ canManage }: Props) {
     }
   }
 
-  async function createMedication(event: FormEvent) {
+  function resetMedicationEditor() {
+    setMedicationForm(emptyMedication);
+    setEditingMedicationId(null);
+  }
+
+  function editMedication(medication: Medication) {
+    setEditingMedicationId(medication.id);
+    setMedicationForm({
+      code: medication.code,
+      name: medication.name,
+      genericName: medication.genericName ?? '',
+      activeIngredient: medication.activeIngredient ?? '',
+      strength: medication.strength ?? '',
+      dosageForm: medication.dosageForm ?? '',
+      unitOfMeasure: medication.unitOfMeasure ?? '',
+      drugTypeId: medication.drugTypeId,
+      pharmaceuticalBrandId: medication.pharmaceuticalBrandId ?? '',
+      storageLocationId: medication.storageLocationId ?? '',
+      requiresPrescription: medication.requiresPrescription,
+      isControlledSubstance: medication.isControlledSubstance,
+      notes: medication.notes ?? '',
+    });
+    setError(null);
+    window.requestAnimationFrame(() => {
+      document.getElementById('medication-editor')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  async function saveMedication(event: FormEvent) {
     event.preventDefault();
     try {
-      await apiRequest<Medication>('/api/pharmacy/medications', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...medicationForm,
-          pharmaceuticalBrandId: medicationForm.pharmaceuticalBrandId || null,
-          storageLocationId: medicationForm.storageLocationId || null,
-        }),
-      });
-      setMedicationForm(emptyMedication);
+      const payload = {
+        ...medicationForm,
+        pharmaceuticalBrandId: medicationForm.pharmaceuticalBrandId || null,
+        storageLocationId: medicationForm.storageLocationId || null,
+      };
+
+      if (editingMedicationId) {
+        await apiRequest<Medication>(`/api/pharmacy/medications/${editingMedicationId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ ...payload, isActive: true }),
+        });
+      } else {
+        await apiRequest<Medication>('/api/pharmacy/medications', {
+          method: 'POST',
+          body: JSON.stringify(payload),
+        });
+      }
+
+      resetMedicationEditor();
       await load();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'No fue posible registrar el medicamento.');
+      setError(caught instanceof Error ? caught.message : editingMedicationId
+        ? 'No fue posible actualizar el medicamento.'
+        : 'No fue posible registrar el medicamento.');
     }
   }
 
   async function deactivateMedication(id: string) {
     try {
       await apiRequest(`/api/pharmacy/medications/${id}`, { method: 'DELETE' });
+      if (editingMedicationId === id) resetMedicationEditor();
       await load();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'No fue posible desactivar el medicamento.');
@@ -204,7 +246,7 @@ export default function PharmacyPage({ canManage }: Props) {
             </thead>
             <tbody>
               {medications.map((medication) => (
-                <tr key={medication.id}>
+                <tr key={medication.id} className={editingMedicationId === medication.id ? 'pharmacy-row--editing' : undefined}>
                   <td className="pharmacy-code">{medication.code}</td>
                   <td>
                     <strong>{medication.name}</strong>
@@ -219,9 +261,14 @@ export default function PharmacyPage({ canManage }: Props) {
                     </span>
                   </td>
                   {canManage && <td>
-                    <button className="button button--small pharmacy-deactivate" onClick={() => void deactivateMedication(medication.id)}>
-                      <i className="fa-solid fa-power-off" aria-hidden="true" /> Desactivar
-                    </button>
+                    <div className="pharmacy-row-actions">
+                      <button className="button button--small pharmacy-edit" onClick={() => editMedication(medication)}>
+                        <i className="fa-solid fa-pen" aria-hidden="true" /> Editar
+                      </button>
+                      <button className="button button--small pharmacy-deactivate" onClick={() => void deactivateMedication(medication.id)}>
+                        <i className="fa-solid fa-power-off" aria-hidden="true" /> Desactivar
+                      </button>
+                    </div>
                   </td>}
                 </tr>
               ))}
@@ -275,9 +322,14 @@ export default function PharmacyPage({ canManage }: Props) {
             </form>
           </section>
 
-          <section className="pharmacy-config-card pharmacy-config-card--medication">
-            <ConfigHeader icon="fa-solid fa-prescription-bottle-medical" title="Nuevo medicamento" description="Completa la ficha farmacéutica y asígnala al catálogo maestro." />
-            <form onSubmit={createMedication} className="form-grid">
+          <section id="medication-editor" className={`pharmacy-config-card pharmacy-config-card--medication ${editingMedicationId ? 'pharmacy-config-card--editing' : ''}`}>
+            <ConfigHeader
+              icon={editingMedicationId ? 'fa-solid fa-pen-to-square' : 'fa-solid fa-prescription-bottle-medical'}
+              title={editingMedicationId ? 'Editar medicamento' : 'Nuevo medicamento'}
+              description={editingMedicationId ? 'Modifica la ficha del medicamento seleccionado y guarda los cambios.' : 'Completa la ficha farmacéutica y asígnala al catálogo maestro.'}
+            />
+            {editingMedicationId && <div className="pharmacy-editing-notice"><i className="fa-solid fa-circle-info" aria-hidden="true" /> Estás editando un medicamento existente.</div>}
+            <form onSubmit={saveMedication} className="form-grid">
               <label>Código *<input placeholder="Ej. MED-001" value={medicationForm.code} onChange={(event) => setMedicationForm({ ...medicationForm, code: event.target.value })} required /></label>
               <label>Nombre comercial *<input placeholder="Ej. Paracetamol" value={medicationForm.name} onChange={(event) => setMedicationForm({ ...medicationForm, name: event.target.value })} required /></label>
               <label>Nombre genérico<input placeholder="Ej. Acetaminofén" value={medicationForm.genericName} onChange={(event) => setMedicationForm({ ...medicationForm, genericName: event.target.value })} /></label>
@@ -290,8 +342,14 @@ export default function PharmacyPage({ canManage }: Props) {
               <label>Ubicación<select value={medicationForm.storageLocationId} onChange={(event) => setMedicationForm({ ...medicationForm, storageLocationId: event.target.value })}><option value="">Sin ubicación</option>{locations.map((item) => <option key={item.id} value={item.id}>{item.code} · {item.name}</option>)}</select></label>
               <label className="checkbox-field"><input type="checkbox" checked={medicationForm.requiresPrescription} onChange={(event) => setMedicationForm({ ...medicationForm, requiresPrescription: event.target.checked })} /> <span>Requiere receta</span></label>
               <label className="checkbox-field"><input type="checkbox" checked={medicationForm.isControlledSubstance} onChange={(event) => setMedicationForm({ ...medicationForm, isControlledSubstance: event.target.checked })} /> <span>Sustancia controlada</span></label>
-              <label className="form-span">Notas<textarea placeholder="Observaciones farmacéuticas..." value={medicationForm.notes} onChange={(event) => setMedicationForm({ ...medicationForm, notes: event.target.value })} /></label>
-              <button className="button button--primary form-span" disabled={drugTypes.length === 0}><i className="fa-solid fa-floppy-disk" aria-hidden="true" /> Guardar medicamento</button>
+              <label className="form-span">Notas<textarea value={medicationForm.notes} onChange={(event) => setMedicationForm({ ...medicationForm, notes: event.target.value })} /></label>
+              <div className="form-span pharmacy-editor-actions">
+                {editingMedicationId && <button type="button" className="button" onClick={resetMedicationEditor}><i className="fa-solid fa-xmark" aria-hidden="true" /> Cancelar</button>}
+                <button className="button button--primary" disabled={drugTypes.length === 0}>
+                  <i className={editingMedicationId ? 'fa-solid fa-floppy-disk' : 'fa-solid fa-circle-plus'} aria-hidden="true" />
+                  {editingMedicationId ? 'Guardar cambios' : 'Guardar medicamento'}
+                </button>
+              </div>
             </form>
           </section>
         </div>}
