@@ -1,5 +1,436 @@
-@media (max-width: 760px) {
+/* Responsive layout for MediCore: desktop, tablet and mobile. */
+.topbar__main {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.mobile-menu-button,
+.sidebar-close,
+.sidebar-backdrop,
+.sidebar-mobile-header {
+  display: none;
+}
+
+.sidebar-desktop-brand {
+  display: block;
+}
+
+.table-wrap {
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 1180px) {
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel--form {
+    position: static;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .content {
+    width: 100%;
+    min-width: 0;
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    z-index: 1001;
+    width: min(86vw, 320px);
+    height: 100dvh !important;
+    padding: 1rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(-105%);
+    transition: transform .22s ease;
+    box-shadow: 24px 0 70px rgba(3, 31, 53, .28);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(4, 27, 45, .52);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .sidebar-desktop-brand {
+    display: none;
+  }
+
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .7rem;
+    margin-bottom: .35rem;
+  }
+
+  .sidebar-mobile-header .brand-inline--sidebar {
+    flex: 1;
+    margin-bottom: .45rem;
+  }
+
+  .sidebar-close,
+  .mobile-menu-button {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(7, 90, 156, .12);
+    border-radius: .78rem;
+  }
+
+  .sidebar-close {
+    width: 2.55rem;
+    height: 2.55rem;
+    margin-top: .15rem;
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+    font-size: 1.05rem;
+  }
+
+  .mobile-menu-button {
+    width: 2.8rem;
+    height: 2.8rem;
+    background: #fff;
+    color: var(--mc-blue-700, #075a9c);
+    box-shadow: 0 8px 20px rgba(7, 90, 156, .08);
+    font-size: 1rem;
+  }
+
+  .sidebar nav {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: .28rem;
+    overflow: visible !important;
+  }
+
+  .nav-item {
+    min-width: 0 !important;
+    justify-content: flex-start !important;
+  }
+
   .nav-item > span:not(.nav-item__icon) {
-    display: inline;
+    display: inline !important;
+  }
+
+  .nav-item__icon {
+    display: grid !important;
+  }
+
+  .sidebar-footer {
+    display: block !important;
+    margin-top: 1.25rem;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    align-items: center;
+    margin: -.25rem -.25rem 1rem;
+    padding: .65rem .25rem .8rem;
+    background: rgba(237, 246, 250, .94);
+  }
+
+  .topbar__title {
+    min-width: 0;
+    gap: .65rem;
+  }
+
+  .topbar__title > div {
+    min-width: 0;
+  }
+
+  .topbar h1 {
+    overflow: hidden;
+    font-size: clamp(1.65rem, 5vw, 2.15rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topbar__icon {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .welcome-card {
+    min-height: 0;
+    padding: 1.5rem;
+  }
+
+  .welcome-card__mark {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-grid article {
+    min-height: 8.6rem;
+  }
+
+  .workspace-grid {
+    gap: .9rem;
+  }
+
+  .panel {
+    border-radius: 1.1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .auth-shell {
+    align-items: start;
+    min-height: 100dvh;
+    padding: 1rem;
+  }
+
+  .auth-card {
+    width: 100%;
+    margin-top: max(.5rem, env(safe-area-inset-top));
+    padding: 1.35rem;
+    border-radius: 1.2rem;
+  }
+
+  .brand-inline--official {
+    margin-bottom: 1rem;
+  }
+
+  .brand-logo {
+    width: min(100%, 21rem);
+    max-height: 7.5rem;
+  }
+
+  .content {
+    padding: .75rem .7rem 1.2rem;
+  }
+
+  .topbar {
+    gap: .65rem;
+    margin: -.1rem -.05rem .85rem;
+    padding: .55rem .05rem .7rem;
+  }
+
+  .topbar__icon {
+    display: none;
+  }
+
+  .topbar .eyebrow {
+    margin-bottom: .15rem;
+    font-size: .62rem;
+  }
+
+  .topbar h1 {
+    font-size: 1.65rem;
+  }
+
+  .topbar > .api-status {
+    flex: 0 0 auto;
+    padding: .38rem .52rem;
+    font-size: .68rem;
+  }
+
+  .welcome-card {
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .welcome-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .welcome-card p {
+    font-size: .9rem;
+    line-height: 1.55;
+  }
+
+  .welcome-card__mark {
+    width: 4.8rem;
+    height: 4.8rem;
+  }
+
+  .feature-grid {
+    gap: .65rem;
+  }
+
+  .feature-grid article {
+    min-height: 0;
+    padding: .95rem;
+  }
+
+  .panel {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .panel-heading {
+    align-items: flex-start;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .form-span,
+  .verification-card {
+    grid-column: auto !important;
+  }
+
+  input,
+  textarea,
+  select {
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .toolbar input,
+  .toolbar select {
+    flex: 1 1 100%;
+  }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: .8rem;
+  }
+
+  .table-wrap table {
+    min-width: 680px;
+  }
+
+  .appointment-card,
+  .clinical-card__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-items: stretch;
+  }
+
+  .card-actions .button {
+    width: 100%;
+  }
+
+  .verification-actions {
+    flex-direction: column;
+  }
+
+  .verification-actions .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: min(92vw, 310px);
+  }
+
+  .brand-isotype {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .brand-inline--official-sidebar strong {
+    font-size: 1.2rem;
+  }
+
+  .content {
+    padding-inline: .55rem;
+  }
+
+  .mobile-menu-button {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .topbar__main {
+    gap: .55rem;
+  }
+
+  .topbar h1 {
+    max-width: 48vw;
+    font-size: 1.45rem;
+  }
+
+  .topbar > .api-status {
+    max-width: 7rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-card__mark {
+    display: none;
+  }
+
+  .panel-heading h2 {
+    font-size: 1.2rem;
+  }
+
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .toolbar .button,
+  .toolbar > button {
+    width: 100%;
+  }
+
+  .info-strip {
+    font-size: .76rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
   }
 }
