@@ -157,6 +157,40 @@ Después de v1.0.0, el mantenimiento previsto se limita principalmente a correcc
 
 ---
 
+## 🔒 Congelamiento final validado — septiembre 2026
+
+El hardening final fue integrado mediante el **PR #17** (`feat/final-ui-dominican-validation`) y fusionado a `main` en el commit [`1809c46c`](https://github.com/Jairo0811/MediCore/commit/1809c46c840bc675151b1f281f765d33608d935e).
+
+Este cierre complementa la Academic Final Edition sin ampliar su alcance funcional. La validación final confirmó en entorno Docker con SQL Server real:
+
+| Verificación final | Estado |
+|---|:---:|
+| Reinicio Docker con base persistente y health checks | ✅ |
+| Identity, bootstrap y sesión administrativa | ✅ |
+| Pacientes y validación de cédula dominicana | ✅ |
+| Personal médico y apoyo de verificación de exequátur MISPAS | ✅ |
+| Agenda y consultas | ✅ |
+| Farmacia, catálogo y edición de medicamentos | ✅ |
+| Inventario, lotes y kardex | ✅ |
+| Laboratorio: definición → orden → resultado → completado | ✅ |
+| Analítica y reporte operacional | ✅ |
+| Auditoría y filtros por entidad | ✅ |
+| Responsive móvil verificado manualmente a 390 px | ✅ |
+| CI post-merge sobre `main` — run #128 | ✅ |
+
+### Hardening incorporado en el freeze final
+
+- **Docker/SQL Server:** el API espera correctamente la disponibilidad de una base `MediCore` existente y EF Core queda como responsable único de crear/migrar la base, eliminando la carrera de inicialización que podía producir el error SQL Server `1801`.
+- **JWT + ASP.NET Core Identity:** los access tokens quedan ligados al `SecurityStamp` del usuario y se valida que la cuenta siga existiendo y activa, evitando aceptar tokens antiguos de usuarios eliminados o invalidados.
+- **Farmacia e inventario:** corrección del mapeo EF Core que provocaba errores `500`, integración estable con catálogos, lotes y ubicaciones, y soporte de edición de medicamentos mediante el endpoint `PUT` existente.
+- **UX/UI:** identidad visual oficial MediCore, Font Awesome Free, formularios y estados mejorados, checkboxes corregidos y navegación responsive con drawer móvil.
+- **Dominicana:** prevalidación y formato de cédula en frontend manteniendo el backend como autoridad final; apoyo documental y enlaces oficiales para la verificación de exequátur MISPAS.
+- **QA:** CI de backend/frontend, pruebas automatizadas, E2E y accesibilidad permanecen verdes después del merge final.
+
+> El tag/release histórico `v1.0.0 — Academic Final Edition` se conserva intacto. `main` representa el **freeze final endurecido** de esa misma edición académica; no se reescribió ni movió el tag publicado.
+
+---
+
 ## 🧩 Dominios funcionales
 
 ### 🩺 Core clínico
@@ -190,6 +224,16 @@ El flujo aplica normalización, longitud exacta de 11 dígitos, checksum Luhn y 
 > El checksum valida estructura; **no certifica que una persona exista ni que una cédula esté vigente**.
 
 Consulta [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATION.md) y [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+---
+
+## 🩺 Verificación de exequátur profesional
+
+Para personal médico, MediCore incluye un bloque de apoyo a la **verificación oficial de exequátur** mediante los recursos públicos del Ministerio de Salud Pública (MISPAS).
+
+La aplicación enlaza la consulta pública y el portal oficial de la API de exequátur. La validación automática no se simula ni se realiza desde el frontend: una integración futura debe ejecutarse exclusivamente desde backend cuando existan credenciales y contrato técnico oficiales, manteniendo los secretos fuera de React.
+
+Consulta [`docs/reference/EXEQUATUR_VALIDATION.md`](docs/reference/EXEQUATUR_VALIDATION.md).
 
 ---
 
@@ -453,6 +497,7 @@ Clean Code · SOLID · DRY · KISS · Separación de responsabilidades · Seguri
 - [`docs/deployment/PRODUCTION.md`](docs/deployment/PRODUCTION.md) — despliegue de producción.
 - [`docs/reference/DISPENSARIO_UNAPEC.md`](docs/reference/DISPENSARIO_UNAPEC.md) — procedencia académica.
 - [`docs/reference/CEDULA_VALIDATION.md`](docs/reference/CEDULA_VALIDATION.md) — validación dominicana.
+- [`docs/reference/EXEQUATUR_VALIDATION.md`](docs/reference/EXEQUATUR_VALIDATION.md) — estrategia y recursos oficiales para verificación de exequátur MISPAS.
 - [`SECURITY.md`](SECURITY.md) — política de seguridad.
 - [`CHANGELOG.md`](CHANGELOG.md) — historial de versiones.
 - [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) — atribuciones y licencias.
