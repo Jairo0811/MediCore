@@ -124,6 +124,7 @@ export default function App() {
   const [session, setSession] = useState<AuthResponse | null>(() => readSession());
   const [section, setSection] = useState<Section>('overview');
   const [apiState, setApiState] = useState<ApiState>('checking');
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -134,6 +135,23 @@ export default function App() {
       });
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    if (!mobileNavOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileNavOpen(false);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [mobileNavOpen]);
 
   if (!session) return <LoginView onAuthenticated={setSession} />;
 
@@ -160,20 +178,53 @@ export default function App() {
   const canOrderLab = has('Administrator', 'Doctor');
   const activeItem = navigation.find((item) => item.id === section) ?? navigation[0];
 
+  const changeSection = (nextSection: Section) => {
+    setSection(nextSection);
+    setMobileNavOpen(false);
+  };
+
+  const signOut = () => {
+    clearSession();
+    setMobileNavOpen(false);
+    setSession(null);
+  };
+
   return <>
     <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
     <div className="app-shell">
-      <aside className="sidebar">
-        <Brand sidebar />
+      {mobileNavOpen && <button className="sidebar-backdrop" type="button" aria-label="Cerrar menú de navegación" onClick={() => setMobileNavOpen(false)} />}
+      <aside id="primary-sidebar" className={mobileNavOpen ? 'sidebar sidebar--open' : 'sidebar'}>
+        <div className="sidebar-mobile-header">
+          <Brand sidebar />
+          <button type="button" className="sidebar-close" aria-label="Cerrar menú" onClick={() => setMobileNavOpen(false)}>
+            <i className="fa-solid fa-xmark" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="sidebar-desktop-brand"><Brand sidebar /></div>
         <p className="sidebar-section-label">Operación clínica</p>
-        <nav aria-label="Navegación principal">{navigation.map((item) => <button type="button" key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} aria-current={section === item.id ? 'page' : undefined} onClick={() => setSection(item.id)}><span className="nav-item__icon" aria-hidden="true"><i className={item.icon} /></span><span>{item.label}</span></button>)}</nav>
+        <nav aria-label="Navegación principal">{navigation.map((item) => <button type="button" key={item.id} className={section === item.id ? 'nav-item nav-item--active' : 'nav-item'} aria-current={section === item.id ? 'page' : undefined} onClick={() => changeSection(item.id)}><span className="nav-item__icon" aria-hidden="true"><i className={item.icon} /></span><span>{item.label}</span></button>)}</nav>
         <div className="sidebar-footer">
           <div className="session-card"><span className="session-card__avatar" aria-hidden="true"><i className="fa-solid fa-user-shield" /></span><div><small>Sesión activa</small><strong>{session.user.fullName}</strong><span>{roles.join(', ')}</span></div></div>
-          <button type="button" className="button button--ghost" onClick={() => { clearSession(); setSession(null); }}><i className="fa-solid fa-arrow-right-from-bracket" aria-hidden="true" /> Cerrar sesión</button>
+          <button type="button" className="button button--ghost" onClick={signOut}><i className="fa-solid fa-arrow-right-from-bracket" aria-hidden="true" /> Cerrar sesión</button>
         </div>
       </aside>
       <main id="main-content" className="content" tabIndex={-1}>
-        <header className="topbar"><div className="topbar__title"><span className="topbar__icon" aria-hidden="true"><i className={activeItem.icon} /></span><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{activeItem.label}</h1></div></div><div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div></header>
+        <header className="topbar">
+          <div className="topbar__main">
+            <button
+              type="button"
+              className="mobile-menu-button"
+              aria-label="Abrir menú de navegación"
+              aria-controls="primary-sidebar"
+              aria-expanded={mobileNavOpen}
+              onClick={() => setMobileNavOpen(true)}
+            >
+              <i className="fa-solid fa-bars" aria-hidden="true" />
+            </button>
+            <div className="topbar__title"><span className="topbar__icon" aria-hidden="true"><i className={activeItem.icon} /></span><div><p className="eyebrow">MediCore · v1.0.0</p><h1>{activeItem.label}</h1></div></div>
+          </div>
+          <div className={`api-status api-status--${apiState}`} role="status" aria-live="polite"><span className="status-dot" aria-hidden="true" />{apiState === 'online' ? 'API disponible' : apiState === 'checking' ? 'Verificando' : 'API sin conexión'}</div>
+        </header>
         {section === 'overview' && <Overview apiState={apiState} />}
         {section === 'patients' && <PatientsPage />}
         {section === 'staff' && <StaffPage />}
