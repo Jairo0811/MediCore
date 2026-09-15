@@ -88,7 +88,7 @@
 }
 
 .pharmacy-table {
-  min-width: 760px;
+  min-width: 820px;
 }
 
 .pharmacy-table thead {
@@ -111,6 +111,11 @@
 
 .pharmacy-table tbody tr:last-child td {
   border-bottom: 0;
+}
+
+.pharmacy-row--editing {
+  background: #f2fbfa !important;
+  box-shadow: inset 3px 0 #18c8ba;
 }
 
 .pharmacy-code {
@@ -151,9 +156,28 @@
   color: #547080;
 }
 
+.pharmacy-row-actions {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+
+.pharmacy-edit,
 .pharmacy-deactivate {
   min-height: 2.35rem;
   white-space: nowrap;
+}
+
+.pharmacy-edit {
+  border-color: #b9dce8;
+  background: #f3fbfd;
+  color: #126b8a;
+}
+
+.pharmacy-edit:hover {
+  border-color: #7abbd0;
+  background: #eaf8fb;
 }
 
 .pharmacy-results {
@@ -249,6 +273,43 @@
 
 .pharmacy-config-card--medication {
   background: linear-gradient(180deg, #fbfeff 0%, #f5fbfd 100%);
+  scroll-margin-top: 7rem;
+}
+
+.pharmacy-config-card--editing {
+  border-color: rgba(10, 169, 158, .42);
+  background: linear-gradient(180deg, #f9fffe 0%, #eefaf8 100%);
+  box-shadow: 0 12px 30px rgba(10, 169, 158, .09);
+}
+
+.pharmacy-config-card--editing .pharmacy-config-card__icon {
+  background: #dff7f2;
+  color: #078d85;
+}
+
+.pharmacy-editing-notice {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  margin: -.2rem 0 .85rem;
+  padding: .6rem .7rem;
+  border: 1px solid #cbeae4;
+  border-radius: .72rem;
+  background: #f0fbf8;
+  color: #2d725f;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.pharmacy-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.pharmacy-editor-actions .button {
+  min-width: 9rem;
 }
 
 @media (max-width: 1320px) {
@@ -300,6 +361,15 @@
   .pharmacy-config-card--medication {
     grid-column: auto;
   }
+
+  .pharmacy-row-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pharmacy-row-actions .button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 520px) {
@@ -318,5 +388,13 @@
 
   .pharmacy-config-card {
     padding: .85rem;
+  }
+
+  .pharmacy-editor-actions {
+    flex-direction: column-reverse;
+  }
+
+  .pharmacy-editor-actions .button {
+    width: 100%;
   }
 }
