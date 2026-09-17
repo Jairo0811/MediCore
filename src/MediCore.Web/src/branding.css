@@ -29,9 +29,7 @@
   filter: drop-shadow(0 8px 18px rgba(1, 22, 42, .3));
 }
 
-.brand-inline--official-sidebar strong {
-  font-size: 1.35rem;
-}
+.brand-inline--official-sidebar strong { font-size: 1.35rem; }
 
 .welcome-card__mark {
   width: 8rem;
@@ -50,12 +48,44 @@
   filter: drop-shadow(0 15px 28px rgba(7, 90, 156, .18));
 }
 
-@media (max-width: 760px) {
-  .brand-inline--official-sidebar {
-    justify-content: flex-start;
-  }
+/* Dominican identity is contextual branding, never a replacement for clinical UI icons. */
+.dominican-origin {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: .48rem;
+  max-width: calc(100vw - 2rem);
+  padding: .48rem .68rem;
+  border: 1px solid rgba(7, 90, 156, .12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .92);
+  color: #466477;
+  box-shadow: 0 8px 24px rgba(11, 67, 101, .09);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: none;
+  font-size: .68rem;
+  font-weight: 750;
+}
 
-  .brand-logo {
-    width: min(100%, 22rem);
-  }
+.dominican-origin img {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 auto;
+  color: #075a9c;
+}
+
+@media (max-width: 760px) {
+  .brand-inline--official-sidebar { justify-content: flex-start; }
+  .brand-logo { width: min(100%, 22rem); }
+  .dominican-origin { right: .6rem; bottom: .6rem; }
+  .dominican-origin span { display: none; }
+  .dominican-origin img { width: 1.5rem; height: 1.5rem; }
+}
+
+@media print {
+  .dominican-origin { display: none; }
 }
